@@ -1,0 +1,83 @@
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+
+public class ServerThread extends Thread {
+
+	private Socket myConnection;
+	private ObjectOutputStream out;
+	private ObjectInputStream in;
+	private String message;
+	
+	public ServerThread(Socket s)
+	{
+		myConnection = s;
+	}
+	
+	public void run()
+	{
+		try 
+		{
+			out = new ObjectOutputStream(myConnection.getOutputStream());
+			out.flush();
+			in = new ObjectInputStream(myConnection.getInputStream());
+		
+			//The server is ready to communicate.....
+		do 
+		{	
+			do
+			{
+				sendMessage("");
+				message = (String)in.readObject();
+			}while(!message.equalsIgnoreCase("1")&&!message.equalsIgnoreCase("2")&&!message.equalsIgnoreCase("3"));
+		
+			if(message.equalsIgnoreCase("1"))
+			{
+				
+				
+			}
+
+			
+			sendMessage("Enter 1 to repeat");
+			message = (String)in.readObject();
+			
+		}while(message.equalsIgnoreCase("1"));
+		
+		} 
+		catch (IOException | ClassNotFoundException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally
+		{
+			//4: Closing connection
+			try
+			{
+				in.close();
+				out.close();
+				myConnection.close();
+			}
+			catch(IOException ioException)
+			{
+				ioException.printStackTrace();
+			}
+		}
+		
+	}
+	
+	void sendMessage(String msg)
+	{
+		try{
+			out.writeObject(msg);
+			out.flush();
+			System.out.println("server>" + msg);
+		}
+		catch(IOException ioException){
+			ioException.printStackTrace();
+		}
+	}
+	
+}
+
