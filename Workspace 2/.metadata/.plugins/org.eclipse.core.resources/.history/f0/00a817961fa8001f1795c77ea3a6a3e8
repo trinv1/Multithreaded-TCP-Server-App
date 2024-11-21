@@ -41,61 +41,18 @@ public class Requester{
 					sendMessage(message);
 				}while(!message.equalsIgnoreCase("1")&&!message.equalsIgnoreCase("2")&&!message.equalsIgnoreCase("3"));
 			
-				//Registration
 			    if(message.equalsIgnoreCase("1"))
 			    {
 			    	//Name
 			    	message = (String)in.readObject();
 					System.out.println(message);
 					message = input.nextLine();
-					sendMessage(message);		
-					
-					//Employee ID
-			    	message = (String)in.readObject();
-					System.out.println(message);
-					message = input.nextLine();
-					sendMessage(message);
-					
-					//Email
-			    	message = (String)in.readObject();
-					System.out.println(message);
-					message = input.nextLine();
-					sendMessage(message);
-					
-					//Password
-			    	message = (String)in.readObject();
-					System.out.println(message);
-					message = input.nextLine();
-					sendMessage(message);
-					
-					//Department name
-			    	message = (String)in.readObject();
-					System.out.println(message);
-					message = input.nextLine();
-					sendMessage(message);
-					
-					//Role
-			    	message = (String)in.readObject();
-					System.out.println(message);
-					message = input.nextLine();
-					sendMessage(message);
+					sendMessage(message);					
 					
 			    }
-			    
-			    //Login
 			    else if(message.equalsIgnoreCase("2"))
 			    {
-			    	//Name
-			    	message = (String)in.readObject();
-					System.out.println(message);
-					message = input.nextLine();
-					sendMessage(message);
-					
-					//Password
-			    	message = (String)in.readObject();
-					System.out.println(message);
-					message = input.nextLine();
-					sendMessage(message);
+
 			    }
 			    
 			    
