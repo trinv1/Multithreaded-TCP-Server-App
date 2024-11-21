@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.io.File;
+import java.io.FileWriter;
 
 public class ServerThread extends Thread {
 
@@ -13,6 +15,7 @@ public class ServerThread extends Thread {
 	private String message;
 	private String email, name, password, depName, role;
 	private int employeeID;
+    File file = new File("login.txt");
 	
 	// Constructor to initialize the thread with a client socket
 	public ServerThread(Socket s)
@@ -40,25 +43,31 @@ public class ServerThread extends Thread {
 			//Registration
 			if(message.equalsIgnoreCase("1"))
 			{
+
 				sendMessage("Please enter your name:");
-				message = (String)in.readObject();
+				name = (String)in.readObject();
 				
 				sendMessage("Please enter your Employee ID:");
 				message = (String)in.readObject();
 				employeeID = Integer.parseInt(message);
 				
 				sendMessage("Please enter your email:");
-				message = (String)in.readObject();
+				email = (String)in.readObject();
 				
 				sendMessage("Please enter your password:");
-				message = (String)in.readObject();
+				password = (String)in.readObject();
 				
 				sendMessage("Please enter your department name:");
-				message = (String)in.readObject();
+				depName = (String)in.readObject();
 				
 				sendMessage("Please enter your role:");
-				message = (String)in.readObject();
-								
+				role = (String)in.readObject();
+				
+            	try (FileWriter fw = new FileWriter(file, true)) {
+            	    String userInfo = name + "\n" + employeeID + "\n" + email + "\n" + password + "\n" + depName + "\n" + role + "\n\n";
+            		fw.write(userInfo);
+            	}
+				
 			}
 			
 			//Login
