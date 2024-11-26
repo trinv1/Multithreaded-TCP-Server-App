@@ -15,12 +15,13 @@ public class ServerThread extends Thread {
 	private String message;
 	private String email, name, password, depName, role;
 	private int employeeID;
-    File file = new File("login.txt");
+	private RegistrationDetails shared;
 	
 	// Constructor to initialize the thread with a client socket
-	public ServerThread(Socket s)
+	public ServerThread(Socket s, RegistrationDetails reg)
 	{
 		myConnection = s;// Stores the client connection socket
+		shared = reg;
 	}
 	
 	public void run()
@@ -36,7 +37,7 @@ public class ServerThread extends Thread {
 		{	
 			do
 			{
-				sendMessage("MENU\n1.Register\n2. Login");//Sending a message to the client
+				sendMessage("1.Register\n2. Login");//Sending a message to the client
 				message = (String)in.readObject();//Reads the client's response
 			}while(!message.equalsIgnoreCase("1")&&!message.equalsIgnoreCase("2"));
 		
@@ -63,10 +64,7 @@ public class ServerThread extends Thread {
 				sendMessage("Please enter your role:");
 				role = (String)in.readObject();
 				
-            	try (FileWriter fw = new FileWriter(file, true)) {
-            	    String userInfo = name + "\n" + employeeID + "\n" + email + "\n" + password + "\n" + depName + "\n" + role + "\n\n";
-            		fw.write(userInfo);
-            	}
+				shared.addDetails(name, employeeID, email, password, depName, role);
 				
 			}
 			

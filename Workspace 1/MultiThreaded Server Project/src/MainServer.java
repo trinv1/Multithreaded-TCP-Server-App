@@ -1,31 +1,41 @@
 //Server-side application that listens for client connections and starts threads for each client.
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-
-public class MainServer {
-
+import java.io.*;
+import java.net.*;
+public class MainServer{
+	
 	public static void main(String args[])
-	{
-		ServerSocket provider;
-		Socket connection;
+	{	
+		ServerSocket providerSocket;//Listens for incoming client connections on port 2004
+		Socket connection = null;
 		ServerThread handler;
+		String fileContents;
+		RegistrationDetails myReg = new RegistrationDetails();//Creating shared object
+		String fileSplitContents[] = new String[5];
 		
-		try 
+		//Infinite loop, The server continues listening for new clients indefinitely
+		try
 		{
-			provider = new ServerSocket(2004,10);
-			
+			//Listens for incoming connections on port 2004 with a backlog of 10
+			providerSocket = new ServerSocket(2004, 10);
+		
 			while(true)
 			{
-				connection = provider.accept();
-				handler = new ServerThread(connection);
-				handler.start();
+			
+				System.out.println("Waiting for connection");
+				connection = providerSocket.accept();//Accepts a client connection
+				System.out.println("Connection received from " + connection.getInetAddress().getHostName());
+				
+				//Spawns a new thread (ServerThread) to handle connection
+				//Passing shared object
+				handler = new ServerThread(connection, myReg);
+				handler.start();//Start the thread
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}
+		
+		catch(Exception e)
+		{
+			
 		}
 	}
-	
 }
