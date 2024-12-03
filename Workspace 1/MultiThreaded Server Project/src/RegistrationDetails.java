@@ -83,6 +83,42 @@ public class RegistrationDetails {
 		}
 	
 	}
+	
+	//Getting list size
+	public synchronized int getLength()
+	{
+		return list.size();
+	}
+	
+	//Storing located details to string
+	public synchronized String getItem(int location)
+	{
+		Details temp = list.get(location);
+		
+		return temp.toString();
+	}
+	
+	//Searching for user details
+	public synchronized String searchDetails(String email, String password)
+	{
+		String result="-1";
+		Iterator i = list.iterator();
+		Details temp;
+		
+		while(i.hasNext())
+		{
+			temp = (Details)i.next();
+			
+			if(temp.getEmail().equalsIgnoreCase(email) && temp.getPassword().equalsIgnoreCase(password))
+			{
+				result = temp.toString();
+				break;
+			}
+		}
+		
+		return result;
+		
 
+	}
 }
 

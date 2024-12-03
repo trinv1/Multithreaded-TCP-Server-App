@@ -71,11 +71,25 @@ public class ServerThread extends Thread {
 			//Login
 			else if (message.equalsIgnoreCase("2"))
 			{
+			    boolean loginSuccessful = false;
+
 				sendMessage("Please enter your email:");
-				message = (String)in.readObject();
+				email = (String)in.readObject();
 				
 				sendMessage("Please enter your password:");
-				message = (String)in.readObject();
+				password = (String)in.readObject();
+				
+				//Searching for email and password
+				String result = shared.searchDetails(email, password);
+				
+				if (result.equals("-1")) {
+		            //Invalid login
+		            sendMessage("Invalid email or password. Please try again.");
+		        } else {
+		            //Successful login
+		            loginSuccessful = true;
+		            sendMessage("Login successful! Here are your details:");
+		        }
 			}
 
 			 //Prompting the client to continue or terminate

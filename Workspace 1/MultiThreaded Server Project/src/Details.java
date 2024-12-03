@@ -17,10 +17,16 @@ public class Details {
 		role = r;
 	}
 	
-	//Accessing users name
-	public String getName()
+	//Accessing users email
+	public String getEmail()
 	{
-		return name;
+		return email;
+	}
+	
+	//Accessing users email
+	public String getPassword()
+	{
+		return password;
 	}
 	
 	//Printing details to string
