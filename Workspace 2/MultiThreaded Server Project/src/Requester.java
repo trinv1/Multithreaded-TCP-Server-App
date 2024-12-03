@@ -96,6 +96,12 @@ public class Requester{
 					System.out.println(message);
 					message = input.nextLine();
 					sendMessage(message);
+					
+					//Result
+					message = (String)in.readObject();
+					System.out.println(message);
+		
+
 			    }
 			    
 			    
