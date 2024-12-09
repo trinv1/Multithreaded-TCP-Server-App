@@ -111,8 +111,40 @@ public class Requester{
 						if(message.equalsIgnoreCase("1")) {
 							message = (String)in.readObject();
 							System.out.println(message);
-
+							
 						}
+							
+						else if(message.equalsIgnoreCase("2")) {
+							message = (String)in.readObject();
+							System.out.println(message);
+						}
+							
+						else if(message.equalsIgnoreCase("3")) {
+							message = (String)in.readObject();
+							System.out.println(message);
+						}
+							
+						else if(message.equalsIgnoreCase("4")) {
+							message = (String)in.readObject();
+							System.out.println(message);
+						}
+							
+						else if(message.equalsIgnoreCase("5")) {
+							message = (String)in.readObject();
+							System.out.println(message);
+						}
+							
+						else if(message.equalsIgnoreCase("6")) {
+							message = (String)in.readObject();
+							System.out.println(message);
+						}
+							
+						else if(message.equalsIgnoreCase("7")) {
+							message = (String)in.readObject();
+							System.out.println(message);
+						}
+
+						
 					} 
 					while (message.equalsIgnoreCase("6")); // Option for logout
 					
