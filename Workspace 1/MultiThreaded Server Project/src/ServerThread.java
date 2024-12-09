@@ -14,7 +14,8 @@ public class ServerThread extends Thread {
 	private ObjectInputStream in;//Used to receive messages from client
 	private String message;
 	private String email, name, password, depName, role;
-	private int employeeID, option;
+	private String reportType, date, status;
+	private int employeeID, option, reportID, assignedID;
 	private RegistrationDetails shared;
 	
 	// Constructor to initialize the thread with a client socket
@@ -98,7 +99,26 @@ public class ServerThread extends Thread {
 		            	switch(option) {
 		            	
 		            	case 1:
-		            		sendMessage("Hello");
+		            		sendMessage("Report type\n(Type 1 for Options Accident Report, Type 2 for New Health and Safety Risk Report): ");
+		    				reportType = (String)in.readObject();
+		    				
+		    				sendMessage("Report ID: ");
+		    				message = (String)in.readObject();
+		    				reportID = Integer.parseInt(message);
+		    				
+		    				sendMessage("Date: ");
+		    				date = (String)in.readObject();
+		    				
+		    				sendMessage("Employee ID : ");
+		    				message = (String)in.readObject();
+		    				employeeID = Integer.parseInt(message);
+		    				
+		    				sendMessage("Status: ");
+		    				status = (String)in.readObject();
+		    				
+		    				sendMessage("Assigned employee ID: ");
+		    				message = (String)in.readObject();
+		    				assignedID = Integer.parseInt(message);
 		            		break;
 		            	
 		            	case 2:
@@ -117,14 +137,6 @@ public class ServerThread extends Thread {
 		            		sendMessage("5");
 		            		break;
 		            		
-		            	case 6:
-		            		sendMessage("6");
-		            		break;
-		            		
-		            	case 7:
-		            		sendMessage("7");
-		            		break;
-		            	
 		            	}
 		            
 		            
