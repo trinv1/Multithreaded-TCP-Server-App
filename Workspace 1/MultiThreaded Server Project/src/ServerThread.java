@@ -14,7 +14,7 @@ public class ServerThread extends Thread {
 	private ObjectInputStream in;//Used to receive messages from client
 	private String message;
 	private String email, name, password, depName, role;
-	private int employeeID;
+	private int employeeID, option;
 	private RegistrationDetails shared;
 	
 	// Constructor to initialize the thread with a client socket
@@ -88,7 +88,20 @@ public class ServerThread extends Thread {
 		        } else {
 		            //Successful login
 		            loginSuccessful = true;
-		            sendMessage("Login successful! Here are your details:");
+		            sendMessage("Welcome to Health and Safety Reporting");
+		            
+		            do {
+		            	sendMessage("MENU\n1. Create Health and Safety Report\n2. Show all registered accident reports\n3. Assign Health and Safety Report\n6. Review all Health and Safety Reports assigned\n7. Update password");
+						message = (String)in.readObject();
+		            	option = Integer.parseInt(message);
+						
+						if(message.equalsIgnoreCase("1")) {
+							sendMessage("Hello");
+						}
+		            
+		            
+		            } while(!message.equals("-1"));
+		     
 		        }
 			}
 
