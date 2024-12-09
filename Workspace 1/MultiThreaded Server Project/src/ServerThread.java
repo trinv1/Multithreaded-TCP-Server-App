@@ -14,15 +14,18 @@ public class ServerThread extends Thread {
 	private ObjectInputStream in;//Used to receive messages from client
 	private String message;
 	private String email, name, password, depName, role;
-	private String reportType, date, status;
-	private int employeeID, option, reportID, assignedID;
+	private String date, status;
+	private int employeeID, option, reportID, assignedID, reportType;
 	private RegistrationDetails shared;
+	private Reports shared2;
+
 	
 	// Constructor to initialize the thread with a client socket
-	public ServerThread(Socket s, RegistrationDetails reg)
+	public ServerThread(Socket s, RegistrationDetails reg, Reports rep)
 	{
 		myConnection = s;// Stores the client connection socket
 		shared = reg;
+		shared2 = rep;
 	}
 	
 	public void run()
@@ -91,16 +94,19 @@ public class ServerThread extends Thread {
 		            loginSuccessful = true;
 		            sendMessage("Welcome to Health and Safety Reporting");
 		            
-		            do {
+		            do {//Menu options
 		            	sendMessage("MENU\n1. Create Health and Safety Report\n2. Show all registered accident reports\n3. Assign Health and Safety Report\n6. Review all Health and Safety Reports assigned\n7. Update password");
 						message = (String)in.readObject();
 		            	option = Integer.parseInt(message);
 						
 		            	switch(option) {
 		            	
+		            	//New health and safety report
 		            	case 1:
+		            		//Health and safety report information
 		            		sendMessage("Report type\n(Type 1 for Options Accident Report, Type 2 for New Health and Safety Risk Report): ");
-		    				reportType = (String)in.readObject();
+		            		message = (String)in.readObject();
+		    				reportType = Integer.parseInt(message);
 		    				
 		    				sendMessage("Report ID: ");
 		    				message = (String)in.readObject();
@@ -119,20 +125,26 @@ public class ServerThread extends Thread {
 		    				sendMessage("Assigned employee ID: ");
 		    				message = (String)in.readObject();
 		    				assignedID = Integer.parseInt(message);
+		    				
+		    				shared2.addDetails(reportType, reportID, date, employeeID, status, assignedID);
 		            		break;
 		            	
+		            	//Retrieve all registered accident reports
 		            	case 2:
 		            		sendMessage("2");
 		            		break;
 		            	
+		            	//Assign health and safety report 
 		            	case 3:
 		            		sendMessage("3");
 		            		break;
-		            		
+		            	
+		            	//View reports assigned to user
 		            	case 4:
 		            		sendMessage("4");
 		            		break;
-		            		
+		            	
+		            	//Update password
 		            	case 5:
 		            		sendMessage("5");
 		            		break;

@@ -103,48 +103,79 @@ public class Requester{
 					
 					//Menu option
 					do{
+						//Option
 						message = (String)in.readObject();
 						System.out.println(message);
 						message = input.nextLine();
 						sendMessage(message);
 						
+						//New Health and Safety Report
 						if(message.equalsIgnoreCase("1")) {
+							
+							//Report Type
 							message = (String)in.readObject();
 							System.out.println(message);
+							message = input.nextLine();
+							sendMessage(message);
+							
+							//Report iD
+							message = (String)in.readObject();
+							System.out.println(message);
+							message = input.nextLine();
+							sendMessage(message);
+							
+							//Date
+							message = (String)in.readObject();
+							System.out.println(message);
+							message = input.nextLine();
+							sendMessage(message);
+							
+							//Employee ID
+							message = (String)in.readObject();
+							System.out.println(message);
+							message = input.nextLine();
+							sendMessage(message);
+							
+							//Status
+							message = (String)in.readObject();
+							System.out.println(message);
+							message = input.nextLine();
+							sendMessage(message);
+							
+							//Assigned ID
+							message = (String)in.readObject();
+							System.out.println(message);
+							message = input.nextLine();
+							sendMessage(message);
+							
 							
 						}
 							
+						//Retrieving all registered accident reports
 						else if(message.equalsIgnoreCase("2")) {
 							message = (String)in.readObject();
 							System.out.println(message);
 						}
-							
+						
+						//Assign health and safety report
 						else if(message.equalsIgnoreCase("3")) {
 							message = (String)in.readObject();
 							System.out.println(message);
 						}
-							
+						
+						//View health and safety reports assigned to user
 						else if(message.equalsIgnoreCase("4")) {
 							message = (String)in.readObject();
 							System.out.println(message);
 						}
-							
+						
+						//Update password
 						else if(message.equalsIgnoreCase("5")) {
 							message = (String)in.readObject();
 							System.out.println(message);
 						}
 							
-						else if(message.equalsIgnoreCase("6")) {
-							message = (String)in.readObject();
-							System.out.println(message);
-						}
-							
-						else if(message.equalsIgnoreCase("7")) {
-							message = (String)in.readObject();
-							System.out.println(message);
-						}
-
-						
+											
 					} 
 					while (message.equalsIgnoreCase("6")); // Option for logout
 					

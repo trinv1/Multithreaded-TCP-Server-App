@@ -10,7 +10,8 @@ public class MainServer{
 		Socket connection = null;
 		ServerThread handler;
 		String fileContents;
-		RegistrationDetails myReg = new RegistrationDetails();//Creating shared object
+		RegistrationDetails myReg = new RegistrationDetails();//Creating shared objects
+		Reports myRep = new Reports();
 		String fileSplitContents[] = new String[5];
 		
 		//Infinite loop, The server continues listening for new clients indefinitely
@@ -27,8 +28,8 @@ public class MainServer{
 				System.out.println("Connection received from " + connection.getInetAddress().getHostName());
 				
 				//Spawns a new thread (ServerThread) to handle connection
-				//Passing shared object
-				handler = new ServerThread(connection, myReg);
+				//Passing shared objects
+				handler = new ServerThread(connection, myReg, myRep);
 				handler.start();//Start the thread
 			}
 		}
