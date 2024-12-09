@@ -99,15 +99,27 @@ public class Requester{
 					
 					//Result
 					message = (String)in.readObject();
-					System.out.println(message);
-		
+					System.out.println(message);	
+					
+					//Menu option
+					do{
+						message = (String)in.readObject();
+						System.out.println(message);
+						message = input.nextLine();
+						sendMessage(message);
+						
+						if(message.equalsIgnoreCase("1")) {
+							message = (String)in.readObject();
+							System.out.println(message);
+
+						}
+					} 
+					while (message.equalsIgnoreCase("6")); // Option for logout
+					
 
 			    }
-			    
-			    
-			    
-			    
-			    
+					   
+			    //Repeat
 			    message = (String)in.readObject();
 			    System.out.println(message);
 			    message = input.nextLine();
