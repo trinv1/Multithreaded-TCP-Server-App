@@ -95,12 +95,42 @@ public class ServerThread extends Thread {
 						message = (String)in.readObject();
 		            	option = Integer.parseInt(message);
 						
-						if(message.equalsIgnoreCase("1")) {
-							sendMessage("Hello");
-						}
+		            	switch(option) {
+		            	
+		            	case 1:
+		            		sendMessage("Hello");
+		            		break;
+		            	
+		            	case 2:
+		            		sendMessage("2");
+		            		break;
+		            	
+		            	case 3:
+		            		sendMessage("3");
+		            		break;
+		            		
+		            	case 4:
+		            		sendMessage("4");
+		            		break;
+		            		
+		            	case 5:
+		            		sendMessage("5");
+		            		break;
+		            		
+		            	case 6:
+		            		sendMessage("6");
+		            		break;
+		            		
+		            	case 7:
+		            		sendMessage("7");
+		            		break;
+		            	
+		            	}
 		            
 		            
-		            } while(!message.equals("-1"));
+		            } while(!message.equalsIgnoreCase("1")&&!message.equalsIgnoreCase("2")&&!message.equalsIgnoreCase("3")&& !message.equalsIgnoreCase("4")&&!message.equalsIgnoreCase("5")&&!message.equalsIgnoreCase("6")&&!message.equalsIgnoreCase("7"));
+		       
+		            
 		     
 		        }
 			}
