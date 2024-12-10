@@ -11,15 +11,15 @@ import java.io.IOException;
 
 public class RegistrationDetails {
 	
-	private LinkedList<Details> list;//Linked list storing objects
+	private LinkedList<UserDetails> list;//Linked list storing objects
 	
 	//Constructor to initialize and populate from list
 	public RegistrationDetails()
 	{
-		list = new LinkedList<Details>();//Initializing linked list
+		list = new LinkedList<UserDetails>();//Initializing linked list
 		String fileContents;//To store a line read from file
 		String[] results = new String[6];
-		Details temp;
+		UserDetails temp;
 		
 		///Populating RegDetails
 		try 
@@ -35,7 +35,7 @@ public class RegistrationDetails {
 				String[] resultPart = fileContents.split("@");
 				
 				//Creating new Details object from parsed data
-				temp = new Details(resultPart[0], Integer.parseInt(resultPart[1]), resultPart[2], resultPart[3], resultPart[4], resultPart[5]);
+				temp = new UserDetails(resultPart[0], Integer.parseInt(resultPart[1]), resultPart[2], resultPart[3], resultPart[4], resultPart[5]);
 				list.add(temp);//Adding to list
 			}
 		} 
@@ -53,7 +53,7 @@ public class RegistrationDetails {
 	public synchronized void addDetails(String name, int employeeID, String email, String password, String depName, String role)
 	{
 		//Creating new Details object from parameters
-		Details temp = new Details(name, employeeID, email, password, depName, role);
+		UserDetails temp = new UserDetails(name, employeeID, email, password, depName, role);
 		
 		list.add(temp);//Add new details to list
 		
@@ -67,7 +67,7 @@ public class RegistrationDetails {
 		
 		while(i.hasNext())
 		{
-			temp = (Details)i.next();
+			temp = (UserDetails)i.next();
 			fw.write(temp.toString()+"\n");//Writing each detail to file
 			
 			System.out.println("Writing "+temp.toString());
@@ -93,7 +93,7 @@ public class RegistrationDetails {
 	//Storing located details to string
 	public synchronized String getItem(int location)
 	{
-		Details temp = list.get(location);
+		UserDetails temp = list.get(location);
 		
 		return temp.toString();
 	}
@@ -103,11 +103,11 @@ public class RegistrationDetails {
 	{
 		String result="-1";
 		Iterator i = list.iterator();
-		Details temp;
+		UserDetails temp;
 		
 		while(i.hasNext())
 		{
-			temp = (Details)i.next();
+			temp = (UserDetails)i.next();
 			
 			if(temp.getEmail().equalsIgnoreCase(email) && temp.getPassword().equalsIgnoreCase(password))
 			{

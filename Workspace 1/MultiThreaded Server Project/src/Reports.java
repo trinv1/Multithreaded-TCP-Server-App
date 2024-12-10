@@ -22,7 +22,6 @@ public class Reports {
 		healthAndSafetyReport = new LinkedList<>();
 		String fileContents;//To store a line read from file
 		String[] results = new String[5];
-		//Details temp;
 		
 		///Populating RegDetails
 		try 
@@ -34,13 +33,15 @@ public class Reports {
 			//Reading file line by line
 			while((fileContents = br.readLine())!=null)
 			{
+				System.out.println(fileContents);
 				//Splitting each line into parts
 				String[] resultPart = fileContents.split("@");
+				
 				
                 int reportType = Integer.parseInt(resultPart[0]);
 
 				//Creating new reportDetails object from parsed data
-				ReportDetails temp = new ReportDetails(reportType, Integer.parseInt(resultPart[1]), resultPart[2], Integer.parseInt(resultPart[3]), resultPart[4], Integer.parseInt(resultPart[5]));
+				ReportDetails temp = new ReportDetails(reportType, Integer.parseInt(resultPart[1]), resultPart[2], Integer.parseInt(resultPart[3]), Integer.parseInt(resultPart[4]), Integer.parseInt(resultPart[5]));
 
 				 //Adding to appropriate list
                 if (reportType == 1) {
@@ -61,7 +62,7 @@ public class Reports {
 	}
 	
 	//Method adding new reportDetails object to list and update file
-	public synchronized void addDetails(int reportType, int reportID, String date, int employeeID, String status, int assignedID)
+	public synchronized void addDetails(int reportType, int reportID, String date, int employeeID, int status, int assignedID)
 	{
 		//Creating new report details objects from parameters
 		ReportDetails temp = new ReportDetails(reportType, reportID, date, employeeID, status, assignedID);
@@ -77,7 +78,7 @@ public class Reports {
 		//Updating the file storage with new list
 		try 
 		{
-		FileWriter fw = new FileWriter(new File("reportDetails.txt"));
+		FileWriter fw = new FileWriter(new File("ReportDetails.txt"));
 		
 		  //Writing accident reports to the file
         for (ReportDetails report : accidentReport) {
@@ -130,17 +131,17 @@ public class Reports {
 	}
 	
 	//Searching for report details
-	/*public synchronized String searchDetails(String email, String password)
+	/*public synchronized String searchDetails(String reportType)
 	{
 		String result="-1";
-		Iterator i = list.iterator();
-		Details temp;
+		Iterator i = accidentReport.iterator();
+		ReportDetails temp;
 		
 		while(i.hasNext())
 		{
-			temp = (Details)i.next();
+			temp = (ReportDetails)i.next();
 			
-			if(temp.getEmail().equalsIgnoreCase(email) && temp.getPassword().equalsIgnoreCase(password))
+			if(temp.getReportType())
 			{
 				result = temp.toString();
 				break;

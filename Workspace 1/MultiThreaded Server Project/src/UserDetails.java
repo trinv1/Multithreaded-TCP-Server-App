@@ -1,13 +1,13 @@
 //Class for encapsulting user details
 
-public class Details {
+public class UserDetails {
 	
 	//Encapsulated fields
 	private String name, email, password, depName, role;
 	private int employeeID;
 	
 	//Details constructor
-	public Details(String n, int ei, String e, String p, String dn, String r)
+	public UserDetails(String n, int ei, String e, String p, String dn, String r)
 	{
 		name = n;
 		employeeID = ei;

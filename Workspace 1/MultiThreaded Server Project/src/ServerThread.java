@@ -14,8 +14,8 @@ public class ServerThread extends Thread {
 	private ObjectInputStream in;//Used to receive messages from client
 	private String message;
 	private String email, name, password, depName, role;
-	private String date, status;
-	private int employeeID, option, reportID, assignedID, reportType;
+	private String date;
+	private int employeeID, status, option, reportID, assignedID, reportType;
 	private RegistrationDetails shared;
 	private Reports shared2;
 
@@ -108,10 +108,6 @@ public class ServerThread extends Thread {
 		            		message = (String)in.readObject();
 		    				reportType = Integer.parseInt(message);
 		    				
-		    				sendMessage("Report ID: ");
-		    				message = (String)in.readObject();
-		    				reportID = Integer.parseInt(message);
-		    				
 		    				sendMessage("Date: ");
 		    				date = (String)in.readObject();
 		    				
@@ -119,8 +115,9 @@ public class ServerThread extends Thread {
 		    				message = (String)in.readObject();
 		    				employeeID = Integer.parseInt(message);
 		    				
-		    				sendMessage("Status: ");
-		    				status = (String)in.readObject();
+		    				sendMessage("Status\n(Enter 1 for 1 for Open, 2 for Assigned or 3 for Closed: ");
+		    				message = (String)in.readObject();
+		    				status = Integer.parseInt(message);
 		    				
 		    				sendMessage("Assigned employee ID: ");
 		    				message = (String)in.readObject();

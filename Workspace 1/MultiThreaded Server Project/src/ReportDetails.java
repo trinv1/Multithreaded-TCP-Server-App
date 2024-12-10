@@ -3,14 +3,15 @@
 public class ReportDetails {
 	
 	//Encapsulated fields
-	private String date, status;
-	private int employeeID, reportType, reportID, assignedID;
+	private String date;
+	private int employeeID, reportID, status, reportType, assignedID;
+	private static int idCounter = 1;
 	
 	//Details constructor
-	public ReportDetails(int rt, int rid, String d, int eid, String s, int aid)
+	public ReportDetails(int rt, int rid, String d, int eid, int s, int aid)
 	{
 		reportType = rt;
-		reportID = rid;
+		reportID = idCounter++;
 		date = d;
 		employeeID = eid;
 		status = s;
