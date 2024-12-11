@@ -170,6 +170,24 @@ public class ServerThread extends Thread {
 			    				reportID = Integer.parseInt(message);
 		    				}
 		    				
+		    				sendMessage("Report found");
+		    						    				
+		    				//Employee id to be assigned to report
+		    				sendMessage("Enter employee ID you would like to assign to report: ");
+		    				message = (String)in.readObject();
+		    				employeeID = Integer.parseInt(message);
+		    				
+		    				//If employee id doesnt exist, must retry
+		    				while (!shared.doesEmployeeIDExist(employeeID)) {
+		    				    sendMessage("Error: Employee ID doesnt not exist. Please try again.");
+		    				    sendMessage("Enter employee ID you would like to assign to report: ");
+		    					message = (String)in.readObject();
+		    					employeeID = Integer.parseInt(message);
+		    				}
+		    				
+		    		//		sendMessage("Employee ID found");
+		    				
+		    				
 		            		break;
 		            	
 		            	//View reports assigned to user

@@ -90,7 +90,7 @@ public class RegistrationDetails {
 		return list.size();
 	}
 	
-	//Method to see if employee id already exists
+	//Method to see if employee id is unique
 	public boolean isEmployeeIDUnique(int employeeID) {
 	for (UserDetails user : list) {
 		    if (user.getEmployeeID() == employeeID) { 
@@ -100,7 +100,7 @@ public class RegistrationDetails {
 		 return true; //Employee ID is unique
 	}
 	
-	//Method to see if email already exists
+	//Method to see if email is unique
 	public boolean isEmailUnique(String email) {
 	for (UserDetails user : list) {
 			 if (user.getEmail().equalsIgnoreCase(email)) { 
@@ -108,6 +108,16 @@ public class RegistrationDetails {
 			 }
 		}
 			 return true;//Email is unique
+	}
+	
+	//Checking if employee id exists
+	public boolean doesEmployeeIDExist(int employeeID) {
+	for (UserDetails user : list) {
+	        if (user.getEmployeeID() == employeeID) {
+	            return true; 
+	        }
+	    }
+	    return false; //Employee id doesnt exist
 	}
 	
 	//Storing located details to string
