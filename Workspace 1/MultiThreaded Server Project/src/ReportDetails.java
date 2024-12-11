@@ -55,11 +55,11 @@ public class ReportDetails {
         this.assignedID = assignedID;
     }
 	
-	//Printing details to string
 	public String toString()
 	{
 		String temp = reportType+"@"+reportID+"@"+date+"@"+employeeID+"@"+status+"@"+assignedID;
 		return temp;
 	}
+
 	
 }

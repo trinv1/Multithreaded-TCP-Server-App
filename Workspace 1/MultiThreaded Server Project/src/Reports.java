@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.io.IOException;
 
@@ -159,7 +161,7 @@ public class Reports {
 		 return false;//Report exists
 	}
 	
-	//Assigning report to employee
+	//Assigning report to employee and updating status
 	public synchronized String assignReport(int reportID, int employeeID)
 	{
 		for (ReportDetails report : accidentReport) {
@@ -200,10 +202,100 @@ public class Reports {
 	                   ", Date: " + report.getDate() +
 	                   ", Status: " + report.getStatus();
 	        }
-	    }
+	 }
 		
 		return "Report not found";
 	}
+	
+	/*//Method to get assigned reports for employee
+	public synchronized String assignedReports(int assignedID){		
+		StringBuilder result = new StringBuilder();
+
+		///Populating RegDetails
+				try 
+				{
+					//Opening file for reading
+					FileReader fr = new FileReader(new File("ReportDetails.txt"));
+					BufferedReader br = new BufferedReader(fr);
+					
+					String fileContents;
+
+					//Reading file line by line
+					while((fileContents = br.readLine())!=null)
+					{
+						System.out.println(fileContents);
+					}
+					
+					for(ReportDetails report : accidentReport) {
+						if(report.getAssignedID() == assignedID) {
+							result.append(report.toString()+"\n");
+						}
+					}
+						
+					for(ReportDetails report : healthAndSafetyRiskReport) {
+						if(report.getAssignedID() == assignedID) {
+							result.append(report.toString()+"\n");
+						}
+					}
+					
+					br.close();
+					
+				} catch (FileNotFoundException e1) 
+					{
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
+			return result.toString();
+		
+	}*/
+
+	// Method to get assigned reports for an employee
+	public synchronized String assignedReports(int assignedID) {
+	    StringBuilder result = new StringBuilder();
+
+	    try {
+	        // Open the file for reading
+	        FileReader fr = new FileReader(new File("ReportDetails.txt"));
+	        BufferedReader br = new BufferedReader(fr);
+
+	        String fileContents;
+
+	        while ((fileContents = br.readLine()) != null) {
+	        	
+	            String[] resultPart = fileContents.split("@");
+
+	            // Parsing employee id field
+	            int assignedEmployeeID = Integer.parseInt(resultPart[5]);
+	            
+	            if (assignedEmployeeID == assignedID) {
+	            	result.append(fileContents).append("\n");
+	            }
+	        }
+
+	        br.close(); // Close the file reader
+	    } catch (FileNotFoundException e) {
+	        e.printStackTrace();
+	        return "Error: Report file not found.";
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return "Error: Unable to read the report file.";
+	    }
+
+	    if(result.length() > 0) {
+	    	return result.toString();
+	    }
+	    else {
+	    	return "No reports assigned to you";
+	    }
+	}
+
+
+
+
 	
 	//Method updating report file
 	public synchronized boolean updateReport(int reportID, int employeeID) {

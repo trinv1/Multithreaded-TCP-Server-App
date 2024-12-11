@@ -109,12 +109,17 @@ public class ServerThread extends Thread {
 		            //Invalid login
 		            sendMessage("Invalid email or password. Please try again.");
 		        } else {
-		            //Successful login
+		        	   
+		        	String[] userDetails = result.split("@");
+		        	employeeID = Integer.parseInt(userDetails[1]); // Extract employeeID
+		        	System.out.println("Logged in as Employee ID: " + employeeID);
+		            
+		        	    //Successful login
 		            loginSuccessful = true;
 		            sendMessage("Welcome to Health and Safety Reporting");
 		            
 		            do {//Menu options
-		            	sendMessage("MENU\n1. Create Health and Safety Report\n2. Show all registered accident reports\n3. Assign Health and Safety Report\n6. Review all Health and Safety Reports assigned\n7. Update password");
+		            	sendMessage("MENU\n1. Create Health and Safety Report\n2. Show all registered accident reports\n3. Assign Health and Safety Report\n4. Review all Health and Safety Reports assigned\n5. Update password");
 						message = (String)in.readObject();
 		            	option = Integer.parseInt(message);
 						
@@ -192,9 +197,10 @@ public class ServerThread extends Thread {
 		    			    shared2.updateReport(reportID, employeeID);//updating report
 		            		break;
 		            	
-		            	//View reports assigned to user
+		            	//View reports assigned to currently logged in user
 		            	case 4:
-		            		sendMessage("4");
+		            		String assignedReports = shared2.assignedReports(employeeID);
+		            		sendMessage(assignedReports);
 		            		break;
 		            	
 		            	//Update password
