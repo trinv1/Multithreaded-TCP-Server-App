@@ -128,7 +128,14 @@ public class ServerThread extends Thread {
 		            	
 		            	//Retrieve all registered accident reports
 		            	case 2:
-		            		sendMessage("2");
+		            		int length = shared2.getAccidentReportSize();
+		    				
+							sendMessage(""+length);
+							
+							for(int i=0;i<length;i++)
+							{
+								sendMessage(shared2.getAccidentReport(i));
+							}
 		            		break;
 		            	
 		            	//Assign health and safety report 

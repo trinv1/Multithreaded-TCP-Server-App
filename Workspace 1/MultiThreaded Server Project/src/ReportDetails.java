@@ -24,6 +24,15 @@ public class ReportDetails {
 		return reportType;
 	}
 	
+/*	//Getters and Setters
+    public int getAssignedEmployeeID() {
+        return assignedID;
+    }
+
+    public void setAssignedEmployeeID(int assignedEmployeeID) {
+        this.assignedID = assignedEmployeeID;
+    }*/
+	
 	//Printing details to string
 	public String toString()
 	{

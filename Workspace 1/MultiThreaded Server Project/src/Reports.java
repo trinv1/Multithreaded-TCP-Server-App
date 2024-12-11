@@ -13,13 +13,13 @@ public class Reports {
 	
 	//Linked lists storing reports
 	private LinkedList<ReportDetails> accidentReport;
-	private LinkedList<ReportDetails> healthAndSafetyReport;
+	private LinkedList<ReportDetails> healthAndSafetyRiskReport;
 	
 	//Constructor to initialize and populate from lists
 	public Reports()
 	{
 		accidentReport = new LinkedList<>();
-		healthAndSafetyReport = new LinkedList<>();
+		healthAndSafetyRiskReport = new LinkedList<>();
 		String fileContents;//To store a line read from file
 		String[] results = new String[5];
 		
@@ -35,8 +35,7 @@ public class Reports {
 			{
 				System.out.println(fileContents);
 				//Splitting each line into parts
-				String[] resultPart = fileContents.split("@");
-				
+				String[] resultPart = fileContents.split("@");			
 				
                 int reportType = Integer.parseInt(resultPart[0]);
 
@@ -47,7 +46,7 @@ public class Reports {
                 if (reportType == 1) {
                     accidentReport.add(temp);
                 } else if (reportType == 2) {
-                    healthAndSafetyReport.add(temp);
+                	healthAndSafetyRiskReport.add(temp);
                 }
 			}
 		} 
@@ -72,7 +71,7 @@ public class Reports {
 		}
 		
 		if(reportType == 2) {
-			healthAndSafetyReport.add(temp);
+			healthAndSafetyRiskReport.add(temp);
 		}
 		
 		//Updating the file storage with new list
@@ -86,8 +85,8 @@ public class Reports {
             System.out.println("Writing to file: " + report.toString());
         }
 
-        //Writing health and safety reports to the file
-        for (ReportDetails report : healthAndSafetyReport) {
+        //Writing health and safety risk  reports to the file
+        for (ReportDetails report : healthAndSafetyRiskReport) {
             fw.write(report.toString() + "\n");
             System.out.println("Writing to file: " + report.toString());
         }
@@ -109,9 +108,9 @@ public class Reports {
 	}
 	
 	//Getting h&s report size
-	public synchronized int healthAndSafetyReportSize()
+	public synchronized int healthAndSafetyRiskReportSize()
 	{
-		return healthAndSafetyReport.size();
+		return healthAndSafetyRiskReport.size();
 	}
 	
 	//Storing located details to string
@@ -131,26 +130,47 @@ public class Reports {
 	}
 	
 	//Searching for report details
-	/*public synchronized String searchDetails(String reportType)
+	public synchronized String searchDetails(int reportType)
 	{
 		String result="-1";
-		Iterator i = accidentReport.iterator();
-		ReportDetails temp;
-		
-		while(i.hasNext())
-		{
-			temp = (ReportDetails)i.next();
-			
-			if(temp.getReportType())
-			{
-				result = temp.toString();
-				break;
-			}
-		}
-		
-		return result;
-		
+		Iterator<ReportDetails>i;
 
+		 // Choose the correct list to iterate over
+		if (reportType == 1) {
+	    	i = accidentReport.iterator();
+	    }
+		else {
+	        return "Invalid report type."; // Handle invalid reportType
+	    }
+	    			
+		//Iterating through the list to find a matching report
+	    while (i.hasNext()) {
+	        ReportDetails temp = i.next();
+	        if (temp.getReportType() == reportType) { // Compare integers
+	            result = temp.toString();
+	            break;
+	        }
+	    }
+			
+		return result;
+			
+
+	}
+	
+/*	//Assigning report to employee
+	public synchronized String updateStatus(int addignedID, int employeeID)
+	{
+		for (ReportDetails report : accidentReport) {
+	 
+		}
+	}
+	
+	//Assigning report to employee
+	public synchronized String assignReport(int addignedID, int employeeID)
+	{
+		for (ReportDetails report : accidentReport) {
+        }
 	}*/
+	
 }
 
