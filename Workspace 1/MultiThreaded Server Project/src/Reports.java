@@ -1,6 +1,7 @@
 //Class to manage a collection of details
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.File;
@@ -155,28 +156,103 @@ public class Reports {
 		       return true; 
 		 }
 	}
-			 return false;//Report exists
+		 return false;//Report exists
 	}
 	
 	//Assigning report to employee
-	/*public synchronized String assignReport(int reportID, int employeeID, UserDetails)
+	public synchronized String assignReport(int reportID, int employeeID)
 	{
 		for (ReportDetails report : accidentReport) {
 			if(report.getReportID() == reportID) {
 				report.setAssignedID(employeeID);
-				
-				for (UserDetails)
+	            return "Assigned Report: " + report.toString(); // Include details of the assigned report
 			}
 		}
-		return null;
-	}*/
+		
+		for (ReportDetails report : healthAndSafetyRiskReport) {
+			if(report.getReportID() == reportID) {
+				report.setAssignedID(employeeID);
+	            return "Assigned Report: " + report.toString();
+			}
+		}
+		return "Report ID not found";//Report not assigned
+	}	
 	
+	public synchronized String getReportDetails(int reportID) {
+		for (ReportDetails report : accidentReport) {
+			if(report.getReportID() == reportID) {
+				return "Report Type: " + report.getReportType() +
+						", Report ID: " + report.getReportID() +
+		                   ", Assigned Employee ID: " + report.getAssignedID() +
+		                   ", Date: " + report.getDate() +
+		                   ", Status: " + report.getStatus();
+			}
+		}
+		
+		for (ReportDetails report : healthAndSafetyRiskReport) {
+	        if (report.getReportID() == reportID) {
+	            return "Report Type: " + report.getReportType() +
+	                   ", Report ID: " + report.getReportID() +
+	                   ", Assigned Employee ID: " + report.getAssignedID() +
+	                   ", Date: " + report.getDate() +
+	                   ", Status: " + report.getStatus();
+	        }
+	    }
+		
+		return "Report not found";
+	}
+	
+	//Method updating report file
+	public synchronized boolean updateReport(int reportID, int employeeID) {
+	    boolean isUpdated = false;
+
+	    //Iterating over accident reports
+	    for (ReportDetails report : accidentReport) {
+	        if (report.getReportID() == reportID) {
+	            report.setAssignedID(employeeID);
+	            isUpdated = true;
+	            break;
+	        }
+	    }
+
+	    //Iterating over health and safety risk reports if not found in accident reports
+	    if (!isUpdated) {
+	        for (ReportDetails report : healthAndSafetyRiskReport) {
+	            if (report.getReportID() == reportID) {
+	                report.setAssignedID(employeeID);
+	                isUpdated = true;
+	                break;
+	            }
+	        }
+	    }
+
+	    //Rewriting the updated data back to the file
+	    if (isUpdated) {
+	        try (BufferedWriter bw = new BufferedWriter(new FileWriter("ReportDetails.txt"))) {
+	            for (ReportDetails report : accidentReport) {
+	                bw.write(report.toString());
+	                bw.newLine();
+	            }
+	            for (ReportDetails report : healthAndSafetyRiskReport) {
+	                bw.write(report.toString());
+	                bw.newLine();
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return isUpdated;
+	}
+
+
+}
+
 	//Assigning report to employee
 	/*public synchronized String updateStatus(int addignedID, int employeeID)
 	{
 		for (ReportDetails report : accidentReport) {
         }
 	}*/
-	
-}
+
 

@@ -34,7 +34,17 @@ public class ReportDetails {
     public int getAssignedID() {
         return assignedID;
     }
-
+    
+    //Accessing date
+    public String getDate() {
+        return date;
+    }
+    
+    //Accessing status
+    public int getStatus() {
+        return status;
+    }
+    
     //Setting assigned employee id
     public void setAssignedID(int assignedID) {
         this.assignedID = assignedID;

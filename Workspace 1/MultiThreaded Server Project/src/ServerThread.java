@@ -170,7 +170,7 @@ public class ServerThread extends Thread {
 			    				reportID = Integer.parseInt(message);
 		    				}
 		    				
-		    				sendMessage("Report found");
+		    				sendMessage("Update Status and Assign ID\n");
 		    						    				
 		    				//Employee id to be assigned to report
 		    				sendMessage("Enter employee ID you would like to assign to report: ");
@@ -185,9 +185,11 @@ public class ServerThread extends Thread {
 		    					employeeID = Integer.parseInt(message);
 		    				}
 		    				
-		    		//		sendMessage("Employee ID found");
-		    				
-		    				
+		    				//Assigning report and get the result
+		    			    String resultAssigned = shared2.assignReport(reportID, employeeID);
+		    			    sendMessage(resultAssigned);
+		    			    
+		    			    shared2.updateReport(reportID, employeeID);//updating report
 		            		break;
 		            	
 		            	//View reports assigned to user
