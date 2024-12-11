@@ -9,6 +9,7 @@ public class Requester{
  	ObjectInputStream in;//Used to recieve messages from the server
  	String message;
  	Scanner input;
+ 	int result;
 	
  	Requester(){
 		
@@ -117,12 +118,7 @@ public class Requester{
 							System.out.println(message);
 							message = input.nextLine();
 							sendMessage(message);
-							
-							//Report iD
-							message = (String)in.readObject();
-							System.out.println(message);
-							message = input.nextLine();
-							sendMessage(message);
+
 							
 							//Date
 							message = (String)in.readObject();
@@ -153,9 +149,17 @@ public class Requester{
 							
 						//Retrieving all registered accident reports
 						else if(message.equalsIgnoreCase("2")) {
+							
+							//Result
 							message = (String)in.readObject();
-							System.out.println(message);
-						}
+							result = Integer.parseInt(message);
+							
+							for(int i = 0;i < result; i++) {
+								message = (String)in.readObject();
+								System.out.println(message);
+							}
+					    }
+						
 						
 						//Assign health and safety report
 						else if(message.equalsIgnoreCase("3")) {
