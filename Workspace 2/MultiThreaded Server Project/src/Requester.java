@@ -174,8 +174,20 @@ public class Requester{
 						
 						//Assign health and safety report
 						else if(message.equalsIgnoreCase("3")) {
-							message = (String)in.readObject();
-							System.out.println(message);
+							
+							//Report ID
+							do {
+							    message = (String)in.readObject();
+							    System.out.println(message);
+
+							    message = input.nextLine();
+							    sendMessage(message);
+
+							    message = (String) in.readObject();
+							    System.out.println(message);
+
+							} while (message.contains("Error: Report not found. Please try again."));
+							
 
 						}
 						
