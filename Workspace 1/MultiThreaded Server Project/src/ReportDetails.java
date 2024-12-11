@@ -45,6 +45,11 @@ public class ReportDetails {
         return status;
     }
     
+    //Setting status
+    public int setStatus(int status) {
+    	return this.status = status;
+    }
+    
     //Setting assigned employee id
     public void setAssignedID(int assignedID) {
         this.assignedID = assignedID;

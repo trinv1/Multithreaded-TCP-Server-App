@@ -165,6 +165,7 @@ public class Reports {
 		for (ReportDetails report : accidentReport) {
 			if(report.getReportID() == reportID) {
 				report.setAssignedID(employeeID);
+				report.setStatus(2);
 	            return "Assigned Report: " + report.toString(); // Include details of the assigned report
 			}
 		}
@@ -172,12 +173,14 @@ public class Reports {
 		for (ReportDetails report : healthAndSafetyRiskReport) {
 			if(report.getReportID() == reportID) {
 				report.setAssignedID(employeeID);
+				report.setStatus(2);
 	            return "Assigned Report: " + report.toString();
 			}
 		}
 		return "Report ID not found";//Report not assigned
-	}	
+	}
 	
+	//Method to get report details
 	public synchronized String getReportDetails(int reportID) {
 		for (ReportDetails report : accidentReport) {
 			if(report.getReportID() == reportID) {
@@ -247,12 +250,4 @@ public class Reports {
 
 
 }
-
-	//Assigning report to employee
-	/*public synchronized String updateStatus(int addignedID, int employeeID)
-	{
-		for (ReportDetails report : accidentReport) {
-        }
-	}*/
-
 
