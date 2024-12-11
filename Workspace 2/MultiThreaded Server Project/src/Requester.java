@@ -52,16 +52,30 @@ public class Requester{
 					sendMessage(message);		
 					
 					//Employee ID
-			    	message = (String)in.readObject();
-					System.out.println(message);
-					message = input.nextLine();
-					sendMessage(message);
+					do {
+					    message = (String) in.readObject();
+					    System.out.println(message);
+
+					    message = input.nextLine();
+					    sendMessage(message);
+
+					    message = (String) in.readObject();
+					    System.out.println(message);
+
+					} while (message.contains("Error: Employee ID already exists. Please try again."));
 					
 					//Email
-			    	message = (String)in.readObject();
-					System.out.println(message);
-					message = input.nextLine();
-					sendMessage(message);
+					do {
+					    message = (String) in.readObject();
+					    System.out.println(message);
+
+					    message = input.nextLine();
+					    sendMessage(message);
+
+					    message = (String) in.readObject();
+					    System.out.println(message);
+
+					} while (message.contains("Error: Email already exists. Please try again."));
 					
 					//Password
 			    	message = (String)in.readObject();
@@ -156,13 +170,13 @@ public class Requester{
 								message = (String)in.readObject();
 								System.out.println(message);
 							}
-					    }
-						
+					    }						
 						
 						//Assign health and safety report
 						else if(message.equalsIgnoreCase("3")) {
 							message = (String)in.readObject();
 							System.out.println(message);
+
 						}
 						
 						//View health and safety reports assigned to user
