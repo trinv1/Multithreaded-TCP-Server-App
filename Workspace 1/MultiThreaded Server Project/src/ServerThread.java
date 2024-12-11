@@ -120,7 +120,6 @@ public class ServerThread extends Thread {
 		    				status = Integer.parseInt(message);
 		    				
 		    				sendMessage("Assigned employee ID: ");
-		    				message = (String)in.readObject();
 		    				assignedID = Integer.parseInt(message);
 		    				
 		    				shared2.addDetails(reportType, reportID, date, employeeID, status, assignedID);

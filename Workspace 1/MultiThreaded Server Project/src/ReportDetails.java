@@ -15,7 +15,7 @@ public class ReportDetails {
 		date = d;
 		employeeID = eid;
 		status = s;
-		assignedID = aid;
+		assignedID = 0;
 	}
 	
 	//Accessing report type
@@ -24,14 +24,14 @@ public class ReportDetails {
 		return reportType;
 	}
 	
-/*	//Getters and Setters
+	//Getters and Setters
     public int getAssignedEmployeeID() {
         return assignedID;
     }
 
     public void setAssignedEmployeeID(int assignedEmployeeID) {
         this.assignedID = assignedEmployeeID;
-    }*/
+    }
 	
 	//Printing details to string
 	public String toString()

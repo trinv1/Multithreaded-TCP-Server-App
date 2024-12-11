@@ -135,18 +135,18 @@ public class Reports {
 		String result="-1";
 		Iterator<ReportDetails>i;
 
-		 // Choose the correct list to iterate over
+		 //Iterate over accident reports 
 		if (reportType == 1) {
 	    	i = accidentReport.iterator();
 	    }
 		else {
-	        return "Invalid report type."; // Handle invalid reportType
+	        return "Invalid report type."; //Handle invalid reportType
 	    }
 	    			
 		//Iterating through the list to find a matching report
 	    while (i.hasNext()) {
 	        ReportDetails temp = i.next();
-	        if (temp.getReportType() == reportType) { // Compare integers
+	        if (temp.getReportType() == reportType) {
 	            result = temp.toString();
 	            break;
 	        }
