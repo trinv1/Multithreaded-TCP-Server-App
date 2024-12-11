@@ -201,7 +201,9 @@ public class Requester{
 
 							} while (message.contains("Error: Employee ID does not exist. Please try again."));
 							
-
+							message = (String) in.readObject();
+						    System.out.println(message);
+							
 						}
 						
 						//View health and safety reports assigned to user
