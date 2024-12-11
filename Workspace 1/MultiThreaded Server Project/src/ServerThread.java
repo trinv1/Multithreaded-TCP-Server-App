@@ -64,8 +64,7 @@ public class ServerThread extends Thread {
 					employeeID = Integer.parseInt(message);
 				}
 				
-				sendMessage("Employee ID is not taken.");
-				
+				sendMessage("Employee ID is not taken.");				
 				sendMessage("Please enter your email:");
 				email = (String)in.readObject();
 				
@@ -119,7 +118,7 @@ public class ServerThread extends Thread {
 		            sendMessage("Welcome to Health and Safety Reporting");
 		            
 		            do {//Menu options
-		            	sendMessage("MENU\n1. Create Health and Safety Report\n2. Show all registered accident reports\n3. Assign Health and Safety Report\n4. Review all Health and Safety Reports assigned\n5. Update password");
+		            	sendMessage("MENU\n1. Create Health and Safety Report\n2. Show all registered accident reports\n3. Assign Health and Safety Report\n4. Review all Health and Safety Reports assigned\n5. Update password\n6. Sign out");
 						message = (String)in.readObject();
 		            	option = Integer.parseInt(message);
 						
@@ -206,7 +205,7 @@ public class ServerThread extends Thread {
 		            	//Update password
 		            	case 5:
 		            		sendMessage("Please enter your current password: ");
-		            		String currentPassword = (String) in.readObject();
+		            		String currentPassword = (String)in.readObject();
 		            		
 		            		sendMessage("Please enter new password: ");
 		    				String newPassword = (String)in.readObject();
@@ -216,24 +215,17 @@ public class ServerThread extends Thread {
 		            		String message = "Password Updated";
 							sendMessage(message);
 		            		break;
-		            		
-		            	}
-		            
-		            
-		            } while(!message.equalsIgnoreCase("1")&&!message.equalsIgnoreCase("2")&&!message.equalsIgnoreCase("3")&& !message.equalsIgnoreCase("4")&&!message.equalsIgnoreCase("5")&&!message.equalsIgnoreCase("6")&&!message.equalsIgnoreCase("7"));
-		       
-		            
-		     
+		            	}		            
+		            } while(option != 6);		       
 		        }
+		  
 			}
-
-			 //Prompting the client to continue or terminate
-			sendMessage("Enter 1 to repeat");
-			message = (String)in.readObject();
 			
-		}while(message.equalsIgnoreCase("1"));//Loop until client exits
-		
-		} 
+		}while(true);//Loop until client exits
+			
+			
+		}
+
 		catch (IOException | ClassNotFoundException e) 
 		{
 			// TODO Auto-generated catch block

@@ -152,6 +152,7 @@ public class RegistrationDetails {
 
 	}
 	
+	//Update password
 	public synchronized boolean updatePassword(String password, String newPassword) {
 	    boolean isUpdated = false;
 	    
@@ -163,7 +164,7 @@ public class RegistrationDetails {
 	    	}
 	    }
 	    
-	    // If the password was updated in the list, rewrite the file
+	    //If the password was updated in the list, rewriting file
 	    if (isUpdated) {
 	        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Details.txt"))) {
 	            for (UserDetails user : list) {
@@ -172,7 +173,7 @@ public class RegistrationDetails {
 	            }
 	        } catch (IOException e) {
 	            e.printStackTrace();
-	            return false; // If file operation fails, return false
+	            return false; 
 	        }
 	    }
 	    
