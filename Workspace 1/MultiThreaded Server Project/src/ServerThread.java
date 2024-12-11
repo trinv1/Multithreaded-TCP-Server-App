@@ -141,7 +141,7 @@ public class ServerThread extends Thread {
 		    				sendMessage("Assigned employee ID: 0");
 		    				assignedID = Integer.parseInt(message);
 		    				
-		    				shared2.addDetails(reportType, reportID, date, employeeID, status, assignedID);
+		    				shared2.addDetails(reportType, 0, date, employeeID, status, assignedID);
 		            		break;
 		            	
 		            	//Retrieve all registered accident reports
@@ -158,7 +158,18 @@ public class ServerThread extends Thread {
 		            	
 		            	//Assign health and safety report 
 		            	case 3:
-		            		sendMessage("2");
+		            		sendMessage("Enter Report ID: ");
+		            		message = (String)in.readObject();
+		    				reportID = Integer.parseInt(message);
+		    				
+		    				//If report id not found, try again
+		    				while (!shared2.doesReportExist(reportID)) {
+		    				    sendMessage("Error: Report not found. Please try again");
+		    				    sendMessage("Report ID: ");
+		    				    message = (String)in.readObject();
+			    				reportID = Integer.parseInt(message);
+		    				}
+		    				
 		            		break;
 		            	
 		            	//View reports assigned to user

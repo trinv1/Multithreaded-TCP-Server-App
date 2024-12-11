@@ -97,7 +97,7 @@ public class RegistrationDetails {
 		           return false; 
 		    }
 		}
-		 return true; // Employee ID is unique
+		 return true; //Employee ID is unique
 	}
 	
 	//Method to see if email already exists
@@ -107,7 +107,7 @@ public class RegistrationDetails {
 			       return false; 
 			 }
 		}
-			 return true; // Email is unique
+			 return true;//Email is unique
 	}
 	
 	//Storing located details to string

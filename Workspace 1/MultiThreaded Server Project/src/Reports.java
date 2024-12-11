@@ -142,6 +142,22 @@ public class Reports {
 		return result;			
 	}
 	
+	//Method to see if report exists
+	public boolean doesReportExist(int reportID) {
+	for (ReportDetails report : accidentReport) {
+			 if (report.getReportID() == reportID) { 
+			       return true; 
+			 }
+		}
+	
+	for (ReportDetails report : healthAndSafetyRiskReport) {
+		 if (report.getReportID() == reportID) { 
+		       return true; 
+		 }
+	}
+			 return false;//Report exists
+	}
+	
 	//Assigning report to employee
 	/*public synchronized String assignReport(int reportID, int employeeID, UserDetails)
 	{
