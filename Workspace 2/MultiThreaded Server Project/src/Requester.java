@@ -188,6 +188,19 @@ public class Requester{
 
 							} while (message.contains("Error: Report not found. Please try again."));
 							
+							//Assigned employee id
+							do {
+							    message = (String)in.readObject();
+							    System.out.println(message);
+
+							    message = input.nextLine();
+							    sendMessage(message);
+
+							    message = (String) in.readObject();
+							    System.out.println(message);
+
+							} while (message.contains("Error: Employee ID does not exist. Please try again."));
+							
 
 						}
 						
