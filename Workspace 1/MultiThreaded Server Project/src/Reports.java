@@ -107,25 +107,11 @@ public class Reports {
 		return accidentReport.size();
 	}
 	
-	//Getting h&s report size
-	public synchronized int healthAndSafetyRiskReportSize()
-	{
-		return healthAndSafetyRiskReport.size();
-	}
-	
 	//Storing located details to string
 	public synchronized String getAccidentReport(int location)
 	{
 		ReportDetails temp = accidentReport.get(location);
 		
-		return temp.toString();
-	}
-	
-	//Storing located details to string
-	public synchronized String getHealthAndSafetyReport(int location)
-	{
-		ReportDetails temp = accidentReport.get(location);
-			
 		return temp.toString();
 	}
 	
@@ -139,6 +125,7 @@ public class Reports {
 		if (reportType == 1) {
 	    	i = accidentReport.iterator();
 	    }
+		
 		else {
 	        return "Invalid report type."; //Handle invalid reportType
 	    }
@@ -152,21 +139,24 @@ public class Reports {
 	        }
 	    }
 			
-		return result;
-			
-
-	}
-	
-/*	//Assigning report to employee
-	public synchronized String updateStatus(int addignedID, int employeeID)
-	{
-		for (ReportDetails report : accidentReport) {
-	 
-		}
+		return result;			
 	}
 	
 	//Assigning report to employee
-	public synchronized String assignReport(int addignedID, int employeeID)
+	/*public synchronized String assignReport(int reportID, int employeeID, UserDetails)
+	{
+		for (ReportDetails report : accidentReport) {
+			if(report.getReportID() == reportID) {
+				report.setAssignedID(employeeID);
+				
+				for (UserDetails)
+			}
+		}
+		return null;
+	}*/
+	
+	//Assigning report to employee
+	/*public synchronized String updateStatus(int addignedID, int employeeID)
 	{
 		for (ReportDetails report : accidentReport) {
         }

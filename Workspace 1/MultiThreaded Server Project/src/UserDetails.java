@@ -29,6 +29,12 @@ public class UserDetails {
 		return password;
 	}
 	
+	//Accessing users employee id
+	public int getEmployeeID() 
+	{
+		return employeeID;
+	}
+	
 	//Printing details to string
 	public String toString()
 	{

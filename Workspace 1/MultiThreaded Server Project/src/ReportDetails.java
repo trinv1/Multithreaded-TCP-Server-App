@@ -24,13 +24,20 @@ public class ReportDetails {
 		return reportType;
 	}
 	
-	//Getters and Setters
-    public int getAssignedEmployeeID() {
+	//Accessing report type
+	public int getReportID()
+	{
+		return reportID;
+	}
+	
+	//Accessing assigned employeeid
+    public int getAssignedID() {
         return assignedID;
     }
 
-    public void setAssignedEmployeeID(int assignedEmployeeID) {
-        this.assignedID = assignedEmployeeID;
+    //Setting assigned employee id
+    public void setAssignedID(int assignedID) {
+        this.assignedID = assignedID;
     }
 	
 	//Printing details to string

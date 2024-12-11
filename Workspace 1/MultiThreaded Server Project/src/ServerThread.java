@@ -56,8 +56,27 @@ public class ServerThread extends Thread {
 				message = (String)in.readObject();
 				employeeID = Integer.parseInt(message);
 				
+				//If employee id already exists, must retry
+				while (!shared.isEmployeeIDUnique(employeeID)) {
+				    sendMessage("Error: Employee ID already exists. Please try again.");
+				    sendMessage("Please enter your Employee ID:");
+					message = (String)in.readObject();
+					employeeID = Integer.parseInt(message);
+				}
+				
+				sendMessage("Employee ID is not taken.");
+				
 				sendMessage("Please enter your email:");
 				email = (String)in.readObject();
+				
+				//If email already exists, must retry
+				while (!shared.isEmailUnique(email)) {
+				    sendMessage("Error: Email already exists. Please try again.");
+				    sendMessage("Please enter your Email:");
+					email = (String)in.readObject();
+				}
+				
+				sendMessage("Email is not taken.");
 				
 				sendMessage("Please enter your password:");
 				password = (String)in.readObject();
@@ -119,7 +138,7 @@ public class ServerThread extends Thread {
 		    				message = (String)in.readObject();
 		    				status = Integer.parseInt(message);
 		    				
-		    				sendMessage("Assigned employee ID: ");
+		    				sendMessage("Assigned employee ID: 0");
 		    				assignedID = Integer.parseInt(message);
 		    				
 		    				shared2.addDetails(reportType, reportID, date, employeeID, status, assignedID);
@@ -139,7 +158,7 @@ public class ServerThread extends Thread {
 		            	
 		            	//Assign health and safety report 
 		            	case 3:
-		            		sendMessage("3");
+		            		sendMessage("2");
 		            		break;
 		            	
 		            	//View reports assigned to user

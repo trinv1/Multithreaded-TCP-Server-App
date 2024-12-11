@@ -90,6 +90,26 @@ public class RegistrationDetails {
 		return list.size();
 	}
 	
+	//Method to see if employee id already exists
+	public boolean isEmployeeIDUnique(int employeeID) {
+	for (UserDetails user : list) {
+		    if (user.getEmployeeID() == employeeID) { 
+		           return false; 
+		    }
+		}
+		 return true; // Employee ID is unique
+	}
+	
+	//Method to see if email already exists
+	public boolean isEmailUnique(String email) {
+	for (UserDetails user : list) {
+			 if (user.getEmail().equalsIgnoreCase(email)) { 
+			       return false; 
+			 }
+		}
+			 return true; // Email is unique
+	}
+	
 	//Storing located details to string
 	public synchronized String getItem(int location)
 	{
