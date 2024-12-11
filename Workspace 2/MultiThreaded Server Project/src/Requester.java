@@ -214,8 +214,17 @@ public class Requester{
 						
 						//Update password
 						else if(message.equalsIgnoreCase("5")) {
+							
+							//Enter new password 
 							message = (String)in.readObject();
 							System.out.println(message);
+							message = input.nextLine();
+							sendMessage(message);
+							
+							message = (String)in.readObject();
+							System.out.println(message);
+							message = input.nextLine();
+							sendMessage(message);
 						}
 							
 											
