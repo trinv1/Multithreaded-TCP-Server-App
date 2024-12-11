@@ -1,6 +1,7 @@
 //Class to manage a collection of details
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.File;
@@ -149,6 +150,34 @@ public class RegistrationDetails {
 		return result;
 		
 
+	}
+	
+	public synchronized boolean updatePassword(String password, String newPassword) {
+	    boolean isUpdated = false;
+	    
+	    for(UserDetails user: list) {
+	    	if(user.getPassword().equals(password)) {
+	    		user.setPassword(newPassword);
+	    		isUpdated = true;
+	    		break;
+	    	}
+	    }
+	    
+	    // If the password was updated in the list, rewrite the file
+	    if (isUpdated) {
+	        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Details.txt"))) {
+	            for (UserDetails user : list) {
+	                writer.write(user.toString());
+	                writer.newLine();
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            return false; // If file operation fails, return false
+	        }
+	    }
+	    
+	    return isUpdated;
+	
 	}
 }
 

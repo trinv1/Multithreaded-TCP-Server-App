@@ -205,7 +205,16 @@ public class ServerThread extends Thread {
 		            	
 		            	//Update password
 		            	case 5:
-		            		sendMessage("5");
+		            		sendMessage("Please enter your current password: ");
+		            		String currentPassword = (String) in.readObject();
+		            		
+		            		sendMessage("Please enter new password: ");
+		    				String newPassword = (String)in.readObject();
+		    	
+
+		            		boolean isUpdated = shared.updatePassword(currentPassword, newPassword);
+		            		String message = "Password Updated";
+							sendMessage(message);
 		            		break;
 		            		
 		            	}

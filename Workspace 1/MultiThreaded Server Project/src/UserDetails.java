@@ -29,6 +29,12 @@ public class UserDetails {
 		return password;
 	}
 	
+	//Setting password users email
+	public String setPassword(String password)
+	{
+		return this.password = password;
+	}
+	
 	//Accessing users employee id
 	public int getEmployeeID() 
 	{
