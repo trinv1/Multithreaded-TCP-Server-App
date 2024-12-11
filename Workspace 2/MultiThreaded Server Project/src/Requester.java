@@ -141,8 +141,6 @@ public class Requester{
 							//Assigned ID
 							message = (String)in.readObject();
 							System.out.println(message);
-							message = input.nextLine();
-							sendMessage(message);
 							
 							
 						}
