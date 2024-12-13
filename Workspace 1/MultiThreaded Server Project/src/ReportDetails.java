@@ -3,14 +3,15 @@
 public class ReportDetails {
 	
 	//Encapsulated fields
-	private String date;
-	private int employeeID, reportID, status, reportType, assignedID;
+	private String date, reportName;
+	private int employeeID, reportID, status, assignedID;
 	private static int idCounter = 1;
+	String str;
 	
 	//Details constructor
-	public ReportDetails(int rt, int rid, String d, int eid, int s, int aid)
+	public ReportDetails(String rn, int rid, String d, int eid, int s, int aid)
 	{
-		reportType = rt;
+		reportName = rn;
 		reportID = idCounter++;
 		date = d;
 		employeeID = eid;
@@ -19,9 +20,9 @@ public class ReportDetails {
 	}
 	
 	//Accessing report type
-	public int getReportType()
+	public String getReportName()
 	{
-		return reportType;
+		return reportName;
 	}
 	
 	//Accessing report type
@@ -57,7 +58,7 @@ public class ReportDetails {
 	
 	public String toString()
 	{
-		String temp = reportType+"@"+reportID+"@"+date+"@"+employeeID+"@"+status+"@"+assignedID;
+		String temp = reportName+"@"+reportID+"@"+date+"@"+employeeID+"@"+status+"@"+assignedID;
 		return temp;
 	}
 

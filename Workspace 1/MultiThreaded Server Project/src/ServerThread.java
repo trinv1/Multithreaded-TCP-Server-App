@@ -131,6 +131,19 @@ public class ServerThread extends Thread {
 		            		message = (String)in.readObject();
 		    				reportType = Integer.parseInt(message);
 		    				
+		    				String reportName = "";
+		    				
+		    				if(reportType == 1) {
+		    					reportName = "Accident Report";
+		    				}
+		    				
+		    				else if(reportType == 2) {
+		    					reportName = "Health and Safety Risk Report";
+		    				} else {
+		    			        sendMessage("Invalid report type. Please enter 1 or 2.");
+		    			        break;
+		    			    }		
+		    				
 		    				sendMessage("Date: ");
 		    				date = (String)in.readObject();
 		    				
@@ -142,10 +155,10 @@ public class ServerThread extends Thread {
 		    				message = (String)in.readObject();
 		    				status = Integer.parseInt(message);
 		    				
-		    				sendMessage("Assigned employee ID: 0");
+		    				sendMessage("Assigned employee ID: null");
 		    				assignedID = Integer.parseInt(message);
-		    				
-		    				shared2.addDetails(reportType, 0, date, employeeID, status, assignedID);
+		  	
+		    				shared2.addDetails(reportName, 0, date, employeeID, status, assignedID);
 		            		break;
 		            	
 		            	//Retrieve all registered accident reports
@@ -217,12 +230,10 @@ public class ServerThread extends Thread {
 		            		break;
 		            	}		            
 		            } while(option != 6);		       
-		        }
-		  
+		        }		  
 			}
 			
-		}while(true);//Loop until client exits
-			
+		}while(true);//Loop until client exits			
 			
 		}
 

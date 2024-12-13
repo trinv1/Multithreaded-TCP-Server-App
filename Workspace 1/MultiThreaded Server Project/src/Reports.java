@@ -40,17 +40,14 @@ public class Reports {
 				//Splitting each line into parts
 				String[] resultPart = fileContents.split("@");			
 				
-                int reportType = Integer.parseInt(resultPart[0]);
-
 				//Creating new reportDetails object from parsed data
-				ReportDetails temp = new ReportDetails(reportType, Integer.parseInt(resultPart[1]), resultPart[2], Integer.parseInt(resultPart[3]), Integer.parseInt(resultPart[4]), Integer.parseInt(resultPart[5]));
+				ReportDetails temp = new ReportDetails(resultPart[0], Integer.parseInt(resultPart[1]), resultPart[2], Integer.parseInt(resultPart[3]), Integer.parseInt(resultPart[4]), Integer.parseInt(resultPart[5]));
 
-				 //Adding to appropriate list
-                if (reportType == 1) {
-                    accidentReport.add(temp);
-                } else if (reportType == 2) {
-                	healthAndSafetyRiskReport.add(temp);
-                }
+				if (resultPart[0].equals("Accident Report")) {
+				    accidentReport.add(temp);
+				} else if (resultPart[0].equals("Health and Safety Risk Report")) {
+				    healthAndSafetyRiskReport.add(temp);
+				}
 			}
 		} 
 			catch (FileNotFoundException e1) 
@@ -64,18 +61,16 @@ public class Reports {
 	}
 	
 	//Method adding new reportDetails object to list and update file
-	public synchronized void addDetails(int reportType, int reportID, String date, int employeeID, int status, int assignedID)
+	public synchronized void addDetails(String reportName, int reportID, String date, int employeeID, int status, int assignedID)
 	{
 		//Creating new report details objects from parameters
-		ReportDetails temp = new ReportDetails(reportType, reportID, date, employeeID, status, assignedID);
+		ReportDetails temp = new ReportDetails(reportName, reportID, date, employeeID, status, assignedID);
 		
-		if(reportType == 1) {
-			accidentReport.add(temp);
-		}
-		
-		if(reportType == 2) {
-			healthAndSafetyRiskReport.add(temp);
-		}
+		  if (reportName.equals("Accident Report")) {
+		        accidentReport.add(temp);
+		    } else if (reportName.equals("Health and Safety Risk Report")) {
+		        healthAndSafetyRiskReport.add(temp);
+		    } 
 		
 		//Updating the file storage with new list
 		try 
@@ -119,14 +114,14 @@ public class Reports {
 	}
 	
 	//Searching for report details
-	public synchronized String searchDetails(int reportType)
+	public synchronized String searchDetails(String reportName)
 	{
 		String result="-1";
 		Iterator<ReportDetails>i;
 
 		 //Iterate over accident reports 
-		if (reportType == 1) {
-	    	i = accidentReport.iterator();
+		if (reportName.equals("Accident Report")) {
+	        i = accidentReport.iterator();
 	    }
 		
 		else {
@@ -136,7 +131,7 @@ public class Reports {
 		//Iterating through the list to find a matching report
 	    while (i.hasNext()) {
 	        ReportDetails temp = i.next();
-	        if (temp.getReportType() == reportType) {
+	        if (temp.getReportName().equals(reportName)) {
 	            result = temp.toString();
 	            break;
 	        }
@@ -186,7 +181,7 @@ public class Reports {
 	public synchronized String getReportDetails(int reportID) {
 		for (ReportDetails report : accidentReport) {
 			if(report.getReportID() == reportID) {
-				return "Report Type: " + report.getReportType() +
+				return "Report Type: " + report.getReportName() +
 						", Report ID: " + report.getReportID() +
 		                   ", Assigned Employee ID: " + report.getAssignedID() +
 		                   ", Date: " + report.getDate() +
@@ -196,7 +191,7 @@ public class Reports {
 		
 		for (ReportDetails report : healthAndSafetyRiskReport) {
 	        if (report.getReportID() == reportID) {
-	            return "Report Type: " + report.getReportType() +
+	            return "Report Type: " + report.getReportName() +
 	                   ", Report ID: " + report.getReportID() +
 	                   ", Assigned Employee ID: " + report.getAssignedID() +
 	                   ", Date: " + report.getDate() +
