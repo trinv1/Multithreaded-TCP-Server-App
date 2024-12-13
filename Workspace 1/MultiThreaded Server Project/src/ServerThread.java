@@ -91,11 +91,12 @@ public class ServerThread extends Thread {
 			}
 			
 			//Login
-			else if (message.equalsIgnoreCase("2"))
-			{
-			    boolean loginSuccessful = false;
+		else if (message.equalsIgnoreCase("2"))
+		{
+			boolean loginSuccessful = false;
 
-				sendMessage("Please enter your email:");
+			while(!loginSuccessful) {
+			    sendMessage("Please enter your email:");
 				email = (String)in.readObject();
 				
 				sendMessage("Please enter your password:");
@@ -103,7 +104,7 @@ public class ServerThread extends Thread {
 				
 				//Searching for email and password
 				String result = shared.searchDetails(email, password);
-				
+			
 				if (result.equals("-1")) {
 		            //Invalid login
 		            sendMessage("Invalid email or password. Please try again.");
@@ -111,12 +112,11 @@ public class ServerThread extends Thread {
 		        	   
 		        	String[] userDetails = result.split("@");
 		        	employeeID = Integer.parseInt(userDetails[1]); // Extract employeeID
-		        	System.out.println("Logged in as Employee ID: " + employeeID);
-		            
-		        	    //Successful login
 		            loginSuccessful = true;
+		        	System.out.println("Logged in as Employee ID: " + employeeID);
 		            sendMessage("Welcome to Health and Safety Reporting");
-		            
+		        } 
+			}		         
 		            do {//Menu options
 		            	sendMessage("MENU\n1. Create Health and Safety Report\n2. Show all registered accident reports\n3. Assign Health and Safety Report\n4. Review all Health and Safety Reports assigned\n5. Update password\n6. Sign out");
 						message = (String)in.readObject();
@@ -235,9 +235,8 @@ public class ServerThread extends Thread {
 		            	}		            
 		            } while(option != 6);		       
 		        }		  
-			}
-			
-		}while(true);//Loop until client exits			
+			}			
+		while(true);//Loop until client exits			
 			
 		}
 
