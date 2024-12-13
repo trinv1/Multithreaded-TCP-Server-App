@@ -15,7 +15,7 @@ public class ServerThread extends Thread {
 	private String message;
 	private String email, name, password, depName, role;
 	private String date;
-	private int employeeID, status, option, reportID, assignedID, reportType;
+	private int employeeID, statusNum, option, reportID, assignedID, reportType;
 	private RegistrationDetails shared;
 	private Reports shared2;
 
@@ -118,7 +118,7 @@ public class ServerThread extends Thread {
 		        } 
 			}		         
 		            do {//Menu options
-		            	sendMessage("MENU\n1. Create Health and Safety Report\n2. Show all registered accident reports\n3. Assign Health and Safety Report\n4. Review all Health and Safety Reports assigned\n5. Update password\n6. Sign out");
+		            	sendMessage("MENU\n1. Create Health and Safety Report\n2. Show all registered accident reports\n3. Assign Health and Safety Report\n4. Review all Health and Safety Reports assigned\n5. Close Report\n6. Update password\n7. Sign out");
 						message = (String)in.readObject();
 		            	option = Integer.parseInt(message);
 						
@@ -150,9 +150,13 @@ public class ServerThread extends Thread {
 		    				message = (String)in.readObject();
 		    				employeeID = Integer.parseInt(message);
 		    				
-		    				sendMessage("Status\n(Enter 1 for 1 for Open, 2 for Assigned or 3 for Closed: ");
+		    				sendMessage("Status\nEnter 1 for Open");
 		    				message = (String)in.readObject();
-		    				status = Integer.parseInt(message);
+		    				statusNum = Integer.parseInt(message);
+		    				
+		    				String status = "";
+		    				
+		    				status = "Open";
 		    				
 		    				sendMessage("Assigned employee ID: null");
 		    				assignedID = Integer.parseInt(message);
@@ -205,17 +209,39 @@ public class ServerThread extends Thread {
 		    			    String resultAssigned = shared2.assignReport(reportID, employeeID);
 		    			    sendMessage(resultAssigned);
 		    			    
-		    			    shared2.updateReport(reportID, employeeID);//updating report
+		    			    shared2.updateReportFile();//updating report
 		            		break;
 		            	
 		            	//View reports assigned to currently logged in user
 		            	case 4:
 		            		String assignedReports = shared2.assignedReports(employeeID);
 		            		sendMessage(assignedReports);
+		            		System.out.println("Assigned Reports: "+assignedReports);
+		            		break;
+		            		
+		            	//Closing report
+		            	case 5:
+		            		sendMessage("Enter Report ID: ");
+		            		message = (String)in.readObject();
+		    				reportID = Integer.parseInt(message);
+		    				
+		    				//If report id not found, try again
+		    				while (!shared2.doesReportExist(reportID)) {
+		    				    sendMessage("Error: Report not found. Please try again");
+		    				    sendMessage("Report ID: ");
+		    				    message = (String)in.readObject();
+			    				reportID = Integer.parseInt(message);
+		    				}
+		    				
+		    				//Assigning report and get the result
+		    			    String resultClosed = shared2.closeReport(reportID);
+		    			    sendMessage(resultClosed);
+		    			    
+		    			    shared2.updateReportFile();//updating report
 		            		break;
 		            	
 		            	//Update password
-		            	case 5:
+		            	case 6:
 		            		sendMessage("Please enter your current password: ");
 		            		String currentPassword = (String)in.readObject();
 		            		
@@ -233,7 +259,7 @@ public class ServerThread extends Thread {
 		            		break;
 		    				}
 		            	}		            
-		            } while(option != 6);		       
+		            } while(option != 7);		       
 		        }		  
 			}			
 		while(true);//Loop until client exits			

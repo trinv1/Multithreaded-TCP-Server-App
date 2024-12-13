@@ -26,7 +26,7 @@ public class Reports {
 		String fileContents;//To store a line read from file
 		String[] results = new String[5];
 		
-		///Populating RegDetails
+		//Populating RegDetails
 		try 
 		{
 			//Opening file for reading
@@ -41,7 +41,7 @@ public class Reports {
 				String[] resultPart = fileContents.split("@");			
 				
 				//Creating new reportDetails object from parsed data
-				ReportDetails temp = new ReportDetails(resultPart[0], Integer.parseInt(resultPart[1]), resultPart[2], Integer.parseInt(resultPart[3]), Integer.parseInt(resultPart[4]), Integer.parseInt(resultPart[5]));
+				ReportDetails temp = new ReportDetails(resultPart[0], Integer.parseInt(resultPart[1]), resultPart[2], Integer.parseInt(resultPart[3]), resultPart[4], Integer.parseInt(resultPart[5]));
 
 				if (resultPart[0].equals("Accident Report")) {
 				    accidentReport.add(temp);
@@ -61,7 +61,7 @@ public class Reports {
 	}
 	
 	//Method adding new reportDetails object to list and update file
-	public synchronized void addDetails(String reportName, int reportID, String date, int employeeID, int status, int assignedID)
+	public synchronized void addDetails(String reportName, int reportID, String date, int employeeID, String status, int assignedID)
 	{
 		//Creating new report details objects from parameters
 		ReportDetails temp = new ReportDetails(reportName, reportID, date, employeeID, status, assignedID);
@@ -72,31 +72,16 @@ public class Reports {
 		        healthAndSafetyRiskReport.add(temp);
 		    } 
 		
-		//Updating the file storage with new list
-		try 
-		{
-		FileWriter fw = new FileWriter(new File("ReportDetails.txt"), true);
-		
-		  //Writing accident reports to the file
-        for (ReportDetails report : accidentReport) {
-            fw.write(report.toString() + "\n");
-            System.out.println("Writing to file: " + report.toString());
-        }
-
-        //Writing health and safety risk  reports to the file
-        for (ReportDetails report : healthAndSafetyRiskReport) {
-            fw.write(report.toString() + "\n");
-            System.out.println("Writing to file: " + report.toString());
-        }
-		fw.close();//Closing file writer
-		} 
-		
-		catch (IOException e) 
-		{
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-		}
-	
+		  // Updating the file storage with new entry
+		    try (FileWriter fw = new FileWriter(new File("ReportDetails.txt"), true); // Enable append mode
+		         BufferedWriter bw = new BufferedWriter(fw)) {
+		        bw.write(temp.toString());
+		        bw.newLine(); // Add a new line for each entry
+		        System.out.println("Report added to file: " + temp.toString());
+		    } catch (IOException e) {
+		        System.err.println("Error writing report to file.");
+		        e.printStackTrace();
+		    }
 	}
 	
 	//Getting accident report size
@@ -139,6 +124,7 @@ public class Reports {
 			
 		return result;			
 	}
+
 	
 	//Method to see if report exists
 	public boolean doesReportExist(int reportID) {
@@ -162,7 +148,7 @@ public class Reports {
 		for (ReportDetails report : accidentReport) {
 			if(report.getReportID() == reportID) {
 				report.setAssignedID(employeeID);
-				report.setStatus(2);
+				report.setStatus("Assigned");
 	            return "Assigned Report: " + report.toString(); // Include details of the assigned report
 			}
 		}
@@ -170,7 +156,7 @@ public class Reports {
 		for (ReportDetails report : healthAndSafetyRiskReport) {
 			if(report.getReportID() == reportID) {
 				report.setAssignedID(employeeID);
-				report.setStatus(2);
+				report.setStatus("Assigned");
 	            return "Assigned Report: " + report.toString();
 			}
 		}
@@ -242,48 +228,40 @@ public class Reports {
 	    }
 	}
 	
-	//Method updating report file
-	public synchronized boolean updateReport(int reportID, int employeeID) {
-	    boolean isUpdated = false;
-
-	    //Iterating over accident reports
-	    for (ReportDetails report : accidentReport) {
-	        if (report.getReportID() == reportID) {
-	            report.setAssignedID(employeeID);
-	            isUpdated = true;
-	            break;
+	// Method updating report file
+	public synchronized void updateReportFile() {
+	    try (BufferedWriter bw = new BufferedWriter(new FileWriter("ReportDetails.txt"))) {
+	        // Write all accident reports
+	        for (ReportDetails report : accidentReport) {
+	            bw.write(report.toString());
+	            bw.newLine();
 	        }
-	    }
-
-	    //Iterating over health and safety risk reports if not found in accident reports
-	    if (!isUpdated) {
+	        // Write all health and safety risk reports
 	        for (ReportDetails report : healthAndSafetyRiskReport) {
-	            if (report.getReportID() == reportID) {
-	                report.setAssignedID(employeeID);
-	                isUpdated = true;
-	                break;
-	            }
+	            bw.write(report.toString());
+	            bw.newLine();
 	        }
+	        System.out.println("Report file updated successfully.");
+	    } catch (IOException e) {
+	        System.err.println("Error updating report file.");
+	        e.printStackTrace();
 	    }
-
-	    //Rewriting the updated data back to the file
-	    if (isUpdated) {
-	        try (BufferedWriter bw = new BufferedWriter(new FileWriter("ReportDetails.txt"))) {
-	            for (ReportDetails report : accidentReport) {
-	                bw.write(report.toString());
-	                bw.newLine();
-	            }
-	            for (ReportDetails report : healthAndSafetyRiskReport) {
-	                bw.write(report.toString());
-	                bw.newLine();
-	            }
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	    }
-
-	    return isUpdated;
 	}
+	
+	
+	//Updating status to closed
+		public synchronized String closeReport(int reportID)
+		{
+			for (ReportDetails report : accidentReport) {
+					report.setStatus("Closed");
+		            return "Closed Report: " + report.toString(); // Include details of the assigned report				
+			}
+			for (ReportDetails report : healthAndSafetyRiskReport) {
+				report.setStatus("Closed");
+	            return "Closed Report: " + report.toString(); // Include details of the assigned report				
+		}
+			return "Report ID not found";//Report not assigned
+		}
 
 
 }

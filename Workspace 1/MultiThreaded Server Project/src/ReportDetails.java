@@ -3,13 +3,13 @@
 public class ReportDetails {
 	
 	//Encapsulated fields
-	private String date, reportName;
-	private int employeeID, reportID, status, assignedID;
+	private String date, reportName, status;
+	private int employeeID, reportID, assignedID;
 	private static int idCounter = 1;
 	String str;
 	
 	//Details constructor
-	public ReportDetails(String rn, int rid, String d, int eid, int s, int aid)
+	public ReportDetails(String rn, int rid, String d, int eid, String s, int aid)
 	{
 		reportName = rn;
 		reportID = idCounter++;
@@ -42,12 +42,12 @@ public class ReportDetails {
     }
     
     //Accessing status
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
     
     //Setting status
-    public int setStatus(int status) {
+    public String setStatus(String status) {
     	return this.status = status;
     }
     
