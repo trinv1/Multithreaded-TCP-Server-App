@@ -135,8 +135,7 @@ public class ServerThread extends Thread {
 		    				
 		    				if(reportType == 1) {
 		    					reportName = "Accident Report";
-		    				}
-		    				
+		    				}				
 		    				else if(reportType == 2) {
 		    					reportName = "Health and Safety Risk Report";
 		    				} else {
@@ -222,12 +221,17 @@ public class ServerThread extends Thread {
 		            		
 		            		sendMessage("Please enter new password: ");
 		    				String newPassword = (String)in.readObject();
-		    	
-
+		   
 		            		boolean isUpdated = shared.updatePassword(currentPassword, newPassword);
+		            		
+		            		if (isUpdated == false) {
+		    		            //Invalid login
+		    		            sendMessage("Incorrect password. Please try again");
+		    		        } else {
 		            		String message = "Password Updated";
 							sendMessage(message);
 		            		break;
+		    				}
 		            	}		            
 		            } while(option != 6);		       
 		        }		  

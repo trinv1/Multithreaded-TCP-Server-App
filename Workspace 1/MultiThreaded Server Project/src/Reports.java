@@ -75,7 +75,7 @@ public class Reports {
 		//Updating the file storage with new list
 		try 
 		{
-		FileWriter fw = new FileWriter(new File("ReportDetails.txt"));
+		FileWriter fw = new FileWriter(new File("ReportDetails.txt"), true);
 		
 		  //Writing accident reports to the file
         for (ReportDetails report : accidentReport) {
