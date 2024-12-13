@@ -98,8 +98,11 @@ public class Requester{
 			    }
 			    
 			    //Login
-			    else if(message.equalsIgnoreCase("2"))
-			    {
+			 else if(message.equalsIgnoreCase("2"))
+			 {
+			    boolean loginSuccessful = false;
+			    	
+			    do {
 			    	//Name
 			    	message = (String)in.readObject();
 					System.out.println(message);
@@ -115,6 +118,15 @@ public class Requester{
 					//Result
 					message = (String)in.readObject();
 					System.out.println(message);	
+					
+					if (!message.equalsIgnoreCase("Welcome to Health and Safety Reporting")) {
+			            // Login failed, retry
+			            System.out.println("Login failed. Please try again.");
+			        } else {
+			            // Login successful
+			            loginSuccessful = true;
+			        }
+			    }while(!loginSuccessful);
 					
 					//Menu option
 					do{
@@ -230,8 +242,7 @@ public class Requester{
 							//Result
 							message = (String)in.readObject();
 							System.out.println(message);
-						}
-											
+						}											
 					} 
 					while (!message.equalsIgnoreCase("6")); // Option for logout
 			    }			    
