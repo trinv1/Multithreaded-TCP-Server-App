@@ -10,19 +10,19 @@ import java.util.LinkedList;
 import java.util.Iterator;
 import java.io.IOException;
 
-public class RegistrationDetails {
+public class Users {
 	
 	private LinkedList<UserDetails> list;//Linked list storing objects
 	
 	//Constructor to initialize and populate from list
-	public RegistrationDetails()
+	public Users()
 	{
 		list = new LinkedList<UserDetails>();//Initializing linked list
 		String fileContents;//To store a line read from file
 		String[] results = new String[6];
 		UserDetails temp;
 		
-		///Populating RegDetails
+		//Populating RegDetails
 		try 
 		{
 			//Opening file for reading
@@ -50,7 +50,27 @@ public class RegistrationDetails {
 			}
 	}
 	
-	//Method adding new Details object to list and update file
+	//Checking if employee id exists
+	public boolean doesEmployeeIDExist(int employeeID) {
+		for (UserDetails user : list) {
+		   if (user.getEmployeeID() == employeeID) {
+		         return true; 
+		   }
+		}
+		    return false; //Employee id doesnt exist
+	}
+	
+	//Is email unique
+	public boolean doesEmailExist(String email) {
+	for (UserDetails user : list) {
+			if (user.getEmail().equalsIgnoreCase(email)) { 
+				     return false; 
+			}
+		}
+				 return true;//Email is unique
+	}
+	
+	//Adding new Details object to list and update file
 	public synchronized void addDetails(String name, int employeeID, String email, String password, String depName, String role)
 	{
 		//Creating new Details object from parameters
@@ -91,36 +111,6 @@ public class RegistrationDetails {
 		return list.size();
 	}
 	
-	//Method to see if employee id is unique
-	public boolean isEmployeeIDUnique(int employeeID) {
-	for (UserDetails user : list) {
-		    if (user.getEmployeeID() == employeeID) { 
-		           return false; 
-		    }
-		}
-		 return true; //Employee ID is unique
-	}
-	
-	//Method to see if email is unique
-	public boolean isEmailUnique(String email) {
-	for (UserDetails user : list) {
-			 if (user.getEmail().equalsIgnoreCase(email)) { 
-			       return false; 
-			 }
-		}
-			 return true;//Email is unique
-	}
-	
-	//Checking if employee id exists
-	public boolean doesEmployeeIDExist(int employeeID) {
-	for (UserDetails user : list) {
-	        if (user.getEmployeeID() == employeeID) {
-	            return true; 
-	        }
-	    }
-	    return false; //Employee id doesnt exist
-	}
-	
 	//Storing located details to string
 	public synchronized String getItem(int location)
 	{
@@ -148,37 +138,37 @@ public class RegistrationDetails {
 		}
 		
 		return result;
-		
-
-	}
 	
-	//Update password
-	public synchronized boolean updatePassword(String password, String newPassword) {
-	    boolean isUpdated = false;
-	    
-	    for(UserDetails user: list) {
-	    	if(user.getPassword().equals(password)) {
-	    		user.setPassword(newPassword);
-	    		isUpdated = true;
-	    		break;
-	    	}
-	    }
-	    
-	    //If the password was updated in the list, rewriting file
-	    if (isUpdated) {
-	        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Details.txt"))) {
-	            for (UserDetails user : list) {
-	                writer.write(user.toString());
-	                writer.newLine();
-	            }
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	            return false; 
+	}
+	// Update Password
+	public synchronized String updatePassword(String password, String newPassword) {
+	    boolean passwordUpdated = false; //Flag to check if password was updated
+
+	    //Iterating over users
+	    for (UserDetails user : list) {
+	        if (user.getPassword().equals(password)) { 
+	            user.setPassword(newPassword);    
+	            passwordUpdated = true;
+	            break; 
 	        }
 	    }
-	    
-	    return isUpdated;
-	
+
+	    if (passwordUpdated) {
+	        //Updating the file with the new password for all users
+	        try (BufferedWriter writer = new BufferedWriter(new FileWriter("Details.txt"))) {
+	            for (UserDetails u : list) {
+	                writer.write(u.toString().trim());
+	                writer.newLine();
+	            }
+	            return "Password Updated Successfully";
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            return "Error updating the password.";
+	        }
+	    } else {
+	        return "Incorrect Password";
+	    }
 	}
-}
+
+	}
 

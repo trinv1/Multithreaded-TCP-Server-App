@@ -10,7 +10,7 @@ public class MainServer{
 		Socket connection = null;
 		ServerThread handler;
 		String fileContents;
-		RegistrationDetails myReg = new RegistrationDetails();//Creating shared objects
+		Users myReg = new Users();//Creating shared objects
 		Reports myRep = new Reports();
 		String fileSplitContents[] = new String[5];
 		

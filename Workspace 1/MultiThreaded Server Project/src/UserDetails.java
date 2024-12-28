@@ -17,6 +17,11 @@ public class UserDetails {
 		role = r;
 	}
 	
+	//Getting employee
+	public int getEmployeeID() {
+		return employeeID;
+	}
+	
 	//Accessing users email
 	public String getEmail()
 	{
@@ -29,16 +34,10 @@ public class UserDetails {
 		return password;
 	}
 	
-	//Setting password users email
+	//Setting password
 	public String setPassword(String password)
 	{
 		return this.password = password;
-	}
-	
-	//Accessing users employee id
-	public int getEmployeeID() 
-	{
-		return employeeID;
 	}
 	
 	//Printing details to string

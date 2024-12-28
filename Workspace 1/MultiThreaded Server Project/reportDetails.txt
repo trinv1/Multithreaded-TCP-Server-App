@@ -1,4 +1,7 @@
-Accident Report@1@444@2@Closed@0
-Accident Report@2@444@2@Assigned@0
-Accident Report@3@11@2@Open@0
-Accident Report@4@4@2@Assigned@0
+Accident Report@1@44@1@Assigned@0
+Accident Report@2@5555@1@Assigned@0
+Accident Report@3@44@1@Assigned@1
+Accident Report@4@1@1@Assigned@1
+Accident Report@5@1@1@Assigned@0
+Accident Report@6@1@1@Assigned@0
+Accident Report@7@1@1@null@0
