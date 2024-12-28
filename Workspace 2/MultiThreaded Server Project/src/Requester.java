@@ -1,51 +1,42 @@
-//This class acts as a client that connects to the server, sends messages, and receives responses.
-
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
-public class Requester{
-	Socket requestSocket;
-	ObjectOutputStream out;//Used to send messages to the server
- 	ObjectInputStream in;//Used to recieve messages from the server
- 	String message;
- 	Scanner input;
- 	int result;
-	
- 	Requester(){
-		
-		input = new Scanner(System.in);
-	}
-	void run()
-	{
-		try
-		{
-			//Creating a socket to connect to the server			
-			requestSocket = new Socket("127.0.0.1", 2004);
-			System.out.println("Connected to localhost in port 2004");
 
-			//Initializing output stream to send messages to server
-			out = new ObjectOutputStream(requestSocket.getOutputStream());
-			out.flush();
-			
-			//Initializing input stream to receive messages from server
-			in = new ObjectInputStream(requestSocket.getInputStream());
-			
-			//Communicating with the server
-			do
-			{
-			
-				do
-				{
-					message = (String)in.readObject();
-					System.out.println(message);
-					message = input.nextLine();
-					sendMessage(message);
-				}while(!message.equalsIgnoreCase("1")&&!message.equalsIgnoreCase("2")&&!message.equalsIgnoreCase("3"));
-			
-				//Registration
-			    if(message.equalsIgnoreCase("1"))
-			    {
-			    	//Name
+public class Requester {
+    Socket requestSocket;
+    ObjectOutputStream out;
+    ObjectInputStream in;
+    String message;
+    Scanner input;
+    int result;
+
+    Requester() {
+        input = new Scanner(System.in);
+    }
+
+    void run() {
+        try {
+        	//Creating a socket to connect to server
+            requestSocket = new Socket("127.0.0.1", 2004);
+            
+            //Initializing output stream to send messages to server
+            out = new ObjectOutputStream(requestSocket.getOutputStream());
+            out.flush();
+            
+            //Initialize input stream to reseive messages from server
+            in = new ObjectInputStream(requestSocket.getInputStream());
+
+            //Communicating with server
+            do {
+                message = (String) in.readObject();
+                System.out.println(message);
+                message = input.nextLine();
+                sendMessage(message);
+
+                //Registration
+                if (message.equalsIgnoreCase("1")) {
+                    
+                	//Name
 			    	message = (String)in.readObject();
 					System.out.println(message);
 					message = input.nextLine();
@@ -94,59 +85,48 @@ public class Requester{
 					System.out.println(message);
 					message = input.nextLine();
 					sendMessage(message);
-					
-			    }
-			    
-			    //Login
-			 else if(message.equalsIgnoreCase("2"))
-			 {
-			    boolean loginSuccessful = false;
-			    	
-			    do {
-			    	//Name
-			    	message = (String)in.readObject();
-					System.out.println(message);
-					message = input.nextLine();
-					sendMessage(message);
-					
-					//Password
-			    	message = (String)in.readObject();
-					System.out.println(message);
-					message = input.nextLine();
-					sendMessage(message);
-					
-					//Result
-					message = (String)in.readObject();
-					System.out.println(message);	
-					
-					if (!message.equalsIgnoreCase("Welcome to Health and Safety Reporting")) {
-			            // Login failed, retry
-			            System.out.println("Login failed. Please try again.");
-			        } else {
-			            // Login successful
-			            loginSuccessful = true;
-			        }
-			    }while(!loginSuccessful);
-					
-					//Menu option
-					do{
-						//Option
-						message = (String)in.readObject();
-						System.out.println(message);
-						message = input.nextLine();
-						sendMessage(message);
-						
-						//New Health and Safety Report
-						if(message.equalsIgnoreCase("1")) {
-							
-							//Report Type
-							message = (String)in.readObject();
-							System.out.println(message);
-							message = input.nextLine();
-							sendMessage(message);
 
-							
-							//Date
+                } 
+                
+                //Login
+                else if (message.equalsIgnoreCase("2")) {
+                    boolean loginSuccessful = false;
+
+                    //Loop to see if login is successful
+                    while (!loginSuccessful) {
+                        for (int i = 0; i < 2; i++) {
+                            
+                        	//Email and Password
+                        	message = (String) in.readObject();
+                            System.out.println(message);
+                            sendMessage(input.nextLine());
+                        }
+
+                        message = (String) in.readObject();
+                        System.out.println(message);
+                        loginSuccessful = message.contains("Welcome to Health and Safety Reporting");
+                    }
+
+                    //Declaring option outside the loop to avoid scope errors
+                    String option = "";
+
+                    do {
+                    	//Menu options
+                        message = (String) in.readObject();
+                        System.out.println(message);
+                        option = input.nextLine();
+                        sendMessage(option);
+                        
+                        //Create health and safety report
+                        if (option.equals("1")) {
+                        	
+                        	//Report Type 
+                        	message = (String) in.readObject();
+                            System.out.println(message);
+                            message = input.nextLine();
+                            sendMessage(message);
+                            
+                            //Date
 							message = (String)in.readObject();
 							System.out.println(message);
 							message = input.nextLine();
@@ -155,137 +135,139 @@ public class Requester{
 							//Employee ID
 							message = (String)in.readObject();
 							System.out.println(message);
-							message = input.nextLine();
-							sendMessage(message);
 							
 							//Status
 							message = (String)in.readObject();
 							System.out.println(message);
-							message = input.nextLine();
-							sendMessage(message);
 							
 							//Assigned ID
 							message = (String)in.readObject();
 							System.out.println(message);
-							
-							
-						}
-							
-						//Retrieving all registered accident reports
-						else if(message.equalsIgnoreCase("2")) {
-							
-							//Result
-							message = (String)in.readObject();
-							result = Integer.parseInt(message);
-							
-							for(int i = 0;i < result; i++) {
-								message = (String)in.readObject();
+                        }
+                        //Getting all accident reports
+                        else if (option.equals("2")) {
+								
+                        	//Accident reports
+                        	    message = (String)in.readObject();
 								System.out.println(message);
-							}
-					    }						
-						
-						//Assign health and safety report
-						else if(message.equalsIgnoreCase("3")) {
-							
-							//Report ID
-							do {
-							    message = (String)in.readObject();
-							    System.out.println(message);
+                        }
 
-							    message = input.nextLine();
-							    sendMessage(message);
+                        //Assigning id to report
+                        else if (option.equals("3")) {
+                        	boolean matchSuccessful = false;
 
-							    message = (String) in.readObject();
-							    System.out.println(message);
+                            while (!matchSuccessful) {
+                                // Enter Report ID
+                                message = (String) in.readObject();
+                                System.out.println(message);
+                                message = input.nextLine();
+                                sendMessage(message);
 
-							} while (message.contains("Error: Report not found. Please try again."));
-							
-							//Assigned employee id
-							do {
-							    message = (String)in.readObject();
-							    System.out.println(message);
+                                // Enter Employee ID
+                                message = (String) in.readObject();
+                                System.out.println(message);
+                                message = input.nextLine();
+                                sendMessage(message);
 
-							    message = input.nextLine();
-							    sendMessage(message);
+                                // Response from server
+                                message = (String) in.readObject();
+                                System.out.println(message);
 
-							    message = (String) in.readObject();
-							    System.out.println(message);
+                                if (message.contains("Report Assigned")) {
+                                    matchSuccessful = true;
+                                }
+                            }  
+                        }
+						   			
+                        //Updating status
+                        else if (option.equals("4")) {
+                            boolean matchSuccessful = false;
 
-							} while (message.contains("Error: Employee ID does not exist. Please try again."));
-							
-							message = (String) in.readObject();
-						    System.out.println(message);
-							
-						}
-						
-						//View health and safety reports assigned to user
-						else if(message.equalsIgnoreCase("4")) {
-							message = (String)in.readObject();
-							System.out.println(message);
-						}
-						
-						//Update password
-						else if(message.equalsIgnoreCase("5")) {
-							
-							//Enter current password 
-							message = (String)in.readObject();
-							System.out.println(message);
-							message = input.nextLine();
-							sendMessage(message);
-							
-							//Enter new password
-							message = (String)in.readObject();
-							System.out.println(message);
-							message = input.nextLine();
-							sendMessage(message);
-							
-							//Result
-							message = (String)in.readObject();
-							System.out.println(message);
-						}											
-					} 
-					while (!message.equalsIgnoreCase("6")); // Option for logout
-			    }			    
-		}while(true);
-		
-		}
-		catch(UnknownHostException unknownHost)
-		{
-			System.err.println("You are trying to connect to an unknown host!");
-		}
-		catch(IOException ioException){
-			ioException.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		finally
-		{
-			//4: Closing connection
-			try{
-				in.close();
-				out.close();
-				requestSocket.close();
-			}
-			catch(IOException ioException){
-				ioException.printStackTrace();
-			}
-		}
-	}
-	void sendMessage(String msg)
-	{
-		try{
-			out.writeObject(msg);
-			out.flush();
-			System.out.println("client>" + msg);
-		}
-		catch(IOException ioException){
-			ioException.printStackTrace();
-		}
-	}
-	public static void main(String args[])
-	{
-		Requester client = new Requester();
-		client.run();
-	}
+                            while (!matchSuccessful) {
+                                //Report ID
+                                message = (String) in.readObject();
+                                System.out.println(message);
+                                message = input.nextLine();
+                                sendMessage(message);
+
+                                //Status
+                                message = (String) in.readObject();
+                                System.out.println(message);
+                                message = input.nextLine();
+                                sendMessage(message);
+
+                                //Response
+                                message = (String) in.readObject();
+                                System.out.println(message);
+
+                                //Exit loop on success
+                                if (message.contains("Closed Report") || message.contains("Open Report")) {
+                                    matchSuccessful = true;
+                                }
+                            }
+                        }
+   
+                        //Assigned reports to currently logged in user
+                        else if (option.equals("5")) {
+                          message = (String) in.readObject();
+                          System.out.println(message);
+                            }
+                        
+                        //Update password
+                        else if(option.equals(6)) {
+
+                        	boolean matchSuccessful = false;
+
+                        	while (!matchSuccessful) {
+
+                                //Enter Current Password
+                                message = (String) in.readObject();
+                                System.out.println(message);
+                                message = input.nextLine();
+                                sendMessage(message);
+
+                                //Enter new password
+                                message = (String) in.readObject();
+                                System.out.println(message);
+                                message = input.nextLine();
+                                sendMessage(message);
+
+                        	
+                                // Exit loop on success
+                                if (message.contains("Password Updated Successfully")) {
+                                	matchSuccessful = true;
+                                }
+                        	}                    
+                        }
+
+                    } while (!option.equals("7")); //Log out on option 7
+
+                }
+            } while (true);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                in.close();
+                out.close();
+                requestSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    void sendMessage(String msg) {
+        try {
+            out.writeObject(msg);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String args[]) {
+        Requester client = new Requester();
+        client.run();
+    }
 }
